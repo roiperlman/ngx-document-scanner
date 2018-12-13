@@ -1,0 +1,31 @@
+$primary: rgb(63, 81, 181);
+$primary_trans: rgba(63, 81, 181, 0.15);
+
+.dropZone {
+  border: 2px dashed $primary;
+  width: 600px;
+  height:300px;
+  max-width: 98vw;
+  max-height: 50vh;
+  transition: 0.5s all;
+  margin-top: auto;
+  margin-bottom: auto;
+  cursor: pointer;
+  border-radius: 20px;
+  padding: 18px;
+}
+
+.drop-hover {
+  background-color: $primary_trans;
+}
+
+.inner-text {
+  font-size: 27px;
+}
+
+$icon_size: 64px;
+.cloud-icon {
+  font-size: $icon_size;
+  margin-left: calc((100% - 64px) / 2)
+
+}

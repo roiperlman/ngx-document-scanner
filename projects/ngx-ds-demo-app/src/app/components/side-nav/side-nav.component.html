@@ -1,0 +1,44 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport="true"
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="'over'">
+    <mat-toolbar #toolbar>Ngx Document Scanner</mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item routerLink="demo">
+        <mat-icon matListIcon style="font-size: 36px;">computer</mat-icon>
+        <span class="menu-text">Demo App</span>
+      </a>
+      <a mat-list-item routerLink="docs">
+        <mat-icon matListIcon style="font-size: 36px;">description</mat-icon>
+        <span class="menu-text">Documentation</span>
+      </a>
+      <a mat-list-item href="https://github.com/roiperlman/ngx-document-scanner">
+        <img matListAvatar src="../../../assets/git.jpg">
+        <span class="menu-text">Github</span>
+      </a>
+      <a mat-list-item href="https://www.npmjs.com/package/ngx-document-scanner">
+        <img matListAvatar src="../../../assets/npm.jpg">
+        <span class="menu-text">npm</span>
+      </a>
+      <a mat-list-item href="https://www.npmjs.com/package/ngx-opencv">
+        <img matListAvatar src="../../../assets/opencv.png">
+        <span class="menu-text">Ngx-OpenCV</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span>Ngx Document Scanner</span>
+    </mat-toolbar>
+    <div style="position: absolute" [ngStyle]="outletCss">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

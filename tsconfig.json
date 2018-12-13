@@ -16,6 +16,17 @@
     "lib": [
       "es2018",
       "dom"
-    ]
-  }
+    ],
+    "paths": {
+      "ngx-document-scanner": [
+        "dist/ngx-document-scanner"
+      ],
+      "ngx-document-scanner/*": [
+        "dist/ngx-document-scanner/*"
+      ]
+    }
+  },
+  "types": [
+    "src/typings.d.ts"
+  ]
 }

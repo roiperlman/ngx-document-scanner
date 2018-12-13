@@ -1,0 +1,8 @@
+<mat-action-list>
+  <button mat-list-item *ngFor="let option of filterOptions" (click)="selectOption(option.name)">
+    <mat-icon>{{option.icon}}</mat-icon>
+    <span fxFlex="100" style="text-align: start; margin: 5px">{{option.text}}</span>
+    <span fxFlex="100"></span>
+    <mat-icon *ngIf="option.name === data.filter">done</mat-icon>
+  </button>
+</mat-action-list>

@@ -1,0 +1,25 @@
+<div [ngStyle]="editorStyle" fxLayoutAlign="space-around">
+  <div #imageContainer [ngStyle]="imageDivStyle" style="margin: auto;" >
+    <ng-container *ngIf="imageLoaded && mode === 'crop'">
+      <ngx-shape-outine #shapeOutline [color]="options.cropToolColor" [weight]="options.cropToolLineWeight" [dimensions]="previewDimensions"></ngx-shape-outine>
+      <ngx-draggable-point #topLeft [pointOptions]="options.pointOptions" [startPosition]="{x: 0, y: 0}" [limitRoles]="['top', 'left']" [container]="imageContainer"></ngx-draggable-point>
+      <ngx-draggable-point #topRight [pointOptions]="options.pointOptions" [startPosition]="{x: previewDimensions.width, y: 0}" [limitRoles]="['top', 'right']" [container]="imageContainer"></ngx-draggable-point>
+      <ngx-draggable-point #bottomLeft [pointOptions]="options.pointOptions" [startPosition]="{x: 0, y: previewDimensions.height}" [limitRoles]="['bottom', 'left']" [container]="imageContainer"></ngx-draggable-point>
+      <ngx-draggable-point #bottomRight [pointOptions]="options.pointOptions" [startPosition]="{x: previewDimensions.width, y: previewDimensions.height}" [limitRoles]="['bottom', 'right']" [container]="imageContainer"></ngx-draggable-point>
+    </ng-container>
+    <canvas #PreviewCanvas [ngStyle]="{'max-width': options.maxPreviewWidth}" style="z-index: 5" ></canvas>
+  </div>
+  <div class="editor-actions" fxLayout="row" fxLayoutAlign="space-around" style="position: absolute; bottom: 0; width: 100vw">
+    <ng-container *ngFor="let button of displayedButtons" [ngSwitch]="button.type">
+      <button mat-mini-fab *ngSwitchCase="'fab'" [name]="button.name" (click)="button.action()" [color]="options.buttonThemeColor">
+        <mat-icon>{{button.icon}}</mat-icon>
+      </button>
+      <button mat-raised-button *ngSwitchCase="'button'" [name]="button.name" (click)="button.action()" [color]="options.buttonThemeColor">
+        <mat-icon>{{button.icon}}</mat-icon>
+        <span>{{button.text}}}</span>
+      </button>
+    </ng-container>
+  </div>
+</div>
+
+
