@@ -21,7 +21,7 @@ export class DemoComponent {
     cropToolShape: 'rect'
   };
 
-  constructor(private dimensions: DimensionsService) {
+  constructor(public dimensions: DimensionsService) {
     this.dimensions.height.subscribe(height => {
       this.config.editorDimensions = {
         width: '100vw',

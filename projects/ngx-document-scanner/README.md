@@ -5,9 +5,9 @@ It uses a [WASM](https://webassembly.org/) build of [OpenCV](https://opencv.org/
 Note that there are a few extra steps required to configure the component other than installing the package from npm.
 
 ## Live Demo
-View a live demo on https://roiperlman.github.io
+View a live demo on https://roiperlman.github.io/ngx-doxument-scanner
 
-## Installing
+## Installation & Setup
 install the package via npm
 
     npm install ngx-document-scanner --save
@@ -32,7 +32,7 @@ import the package to your `app.module.ts` file. you'll need to configure the lo
 
 ## Usage
 
-#### add component to tmplate and bind to inputs and outputs.
+#### add component to template and bind to inputs and outputs.
 
     <ngx-doc-scanner 
 				 *ngIf="image"
@@ -44,7 +44,7 @@ import the package to your `app.module.ts` file. you'll need to configure the lo
                  [config]="config">
     </ngx-doc-scanner>
 
-#### set configuration otpions. for example:
+#### set configuration options. for example:
 
     config: DocScannerConfig = {  
 	    editorBackgroundColor: '#fafafa', 
