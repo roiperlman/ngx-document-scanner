@@ -1246,7 +1246,7 @@ var NgxDocScannerComponent = /** @class */ (function () {
                     case 1:
                         _a.sent();
                         if (this.options.maxImageDimensions) {
-                            this.resize()
+                            this.resize(this.editedImage)
                                 .then(function (resizeResult) {
                                 resizeResult.toBlob(function (blob) {
                                     _this.editResult.emit(blob);
@@ -1406,19 +1406,34 @@ var NgxDocScannerComponent = /** @class */ (function () {
                         return [3 /*break*/, 3];
                     case 3:
                         img = new Image();
-                        img.onload = function () {
-                            // set edited image canvas and dimensions
-                            _this.editedImage = (/** @type {?} */ (document.createElement('canvas')));
-                            _this.editedImage.width = img.width;
-                            _this.editedImage.height = img.height;
-                            _this.imageDimensions.width = img.width;
-                            _this.imageDimensions.height = img.height;
-                            /** @type {?} */
-                            var ctx = _this.editedImage.getContext('2d');
-                            ctx.drawImage(img, 0, 0);
-                            _this.setPreviewPaneDimensions(_this.editedImage);
-                            resolve();
-                        };
+                        img.onload = function () { return __awaiter(_this, void 0, void 0, function () {
+                            var ctx, width, _a;
+                            return __generator(this, function (_b) {
+                                switch (_b.label) {
+                                    case 0:
+                                        // set edited image canvas and dimensions
+                                        this.editedImage = (/** @type {?} */ (document.createElement('canvas')));
+                                        this.editedImage.width = img.width;
+                                        this.editedImage.height = img.height;
+                                        ctx = this.editedImage.getContext('2d');
+                                        ctx.drawImage(img, 0, 0);
+                                        // resize image if larger than max image size
+                                        width = img.width > img.height ? img.height : img.width;
+                                        if (!(width > this.options.maxImageDimensions.width)) return [3 /*break*/, 2];
+                                        _a = this;
+                                        return [4 /*yield*/, this.resize(this.editedImage)];
+                                    case 1:
+                                        _a.editedImage = _b.sent();
+                                        _b.label = 2;
+                                    case 2:
+                                        this.imageDimensions.width = this.editedImage.width;
+                                        this.imageDimensions.height = this.editedImage.height;
+                                        this.setPreviewPaneDimensions(this.editedImage);
+                                        resolve();
+                                        return [2 /*return*/];
+                                }
+                            });
+                        }); };
                         img.src = imageSrc;
                         return [2 /*return*/];
                 }
@@ -1740,13 +1755,13 @@ var NgxDocScannerComponent = /** @class */ (function () {
     /**
      * resize an image to fit constraints set in options.maxImageDimensions
      * @private
-     * @param {?=} image
+     * @param {?} image
      * @return {?}
      */
     NgxDocScannerComponent.prototype.resize = /**
      * resize an image to fit constraints set in options.maxImageDimensions
      * @private
-     * @param {?=} image
+     * @param {?} image
      * @return {?}
      */
     function (image) {
@@ -1755,7 +1770,7 @@ var NgxDocScannerComponent = /** @class */ (function () {
             _this.processing.emit(true);
             setTimeout(function () {
                 /** @type {?} */
-                var src = cv.imread(_this.editedImage);
+                var src = cv.imread(image);
                 /** @type {?} */
                 var currentDimensions = {
                     width: src.size().width,
@@ -1784,12 +1799,8 @@ var NgxDocScannerComponent = /** @class */ (function () {
                     resolve(resizeResult);
                 }
                 else {
-                    if (image) {
-                        resolve(image);
-                    }
-                    else {
-                        resolve(_this.editedImage);
-                    }
+                    _this.processing.emit(false);
+                    resolve(image);
                 }
             }, 30);
         });

@@ -270,7 +270,7 @@ export class NgxDocScannerComponent implements OnInit {
   private async exportImage() {
     await this.applyFilter(false);
     if (this.options.maxImageDimensions) {
-      this.resize()
+      this.resize(this.editedImage)
         .then(resizeResult => {
           resizeResult.toBlob((blob) => {
             this.editResult.emit(blob);
@@ -345,15 +345,20 @@ export class NgxDocScannerComponent implements OnInit {
         reject(err);
       }
       const img = new Image();
-      img.onload = () => {
+      img.onload = async () => {
         // set edited image canvas and dimensions
         this.editedImage = <HTMLCanvasElement> document.createElement('canvas');
         this.editedImage.width = img.width;
         this.editedImage.height = img.height;
-        this.imageDimensions.width = img.width;
-        this.imageDimensions.height = img.height;
         const ctx = this.editedImage.getContext('2d');
         ctx.drawImage(img, 0, 0);
+        // resize image if larger than max image size
+        const width = img.width > img.height ? img.height : img.width;
+        if (width > this.options.maxImageDimensions.width) {
+          this.editedImage = await this.resize(this.editedImage);
+        }
+        this.imageDimensions.width = this.editedImage.width;
+        this.imageDimensions.height = this.editedImage.height;
         this.setPreviewPaneDimensions(this.editedImage);
         resolve();
       };
@@ -586,11 +591,11 @@ export class NgxDocScannerComponent implements OnInit {
   /**
    * resize an image to fit constraints set in options.maxImageDimensions
    */
-  private resize(image?: any): Promise<HTMLCanvasElement> {
+  private resize(image: HTMLCanvasElement): Promise<HTMLCanvasElement> {
     return new Promise((resolve, reject) => {
       this.processing.emit(true);
       setTimeout(() => {
-        const src = cv.imread(this.editedImage);
+        const src = cv.imread(image);
         const currentDimensions = {
           width: src.size().width,
           height: src.size().height
@@ -614,11 +619,8 @@ export class NgxDocScannerComponent implements OnInit {
           this.processing.emit(false);
           resolve(resizeResult);
         } else {
-          if (image) {
-            resolve(image);
-          } else {
-            resolve(this.editedImage);
-          }
+          this.processing.emit(false);
+          resolve(image);
         }
       }, 30);
     });

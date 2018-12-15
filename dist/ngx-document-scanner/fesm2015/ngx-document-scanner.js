@@ -967,7 +967,7 @@ class NgxDocScannerComponent {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.applyFilter(false);
             if (this.options.maxImageDimensions) {
-                this.resize()
+                this.resize(this.editedImage)
                     .then(resizeResult => {
                     resizeResult.toBlob((blob) => {
                         this.editResult.emit(blob);
@@ -1055,19 +1055,25 @@ class NgxDocScannerComponent {
             }
             /** @type {?} */
             const img = new Image();
-            img.onload = () => {
+            img.onload = () => __awaiter(this, void 0, void 0, function* () {
                 // set edited image canvas and dimensions
                 this.editedImage = (/** @type {?} */ (document.createElement('canvas')));
                 this.editedImage.width = img.width;
                 this.editedImage.height = img.height;
-                this.imageDimensions.width = img.width;
-                this.imageDimensions.height = img.height;
                 /** @type {?} */
                 const ctx = this.editedImage.getContext('2d');
                 ctx.drawImage(img, 0, 0);
+                // resize image if larger than max image size
+                /** @type {?} */
+                const width = img.width > img.height ? img.height : img.width;
+                if (width > this.options.maxImageDimensions.width) {
+                    this.editedImage = yield this.resize(this.editedImage);
+                }
+                this.imageDimensions.width = this.editedImage.width;
+                this.imageDimensions.height = this.editedImage.height;
                 this.setPreviewPaneDimensions(this.editedImage);
                 resolve();
-            };
+            });
             img.src = imageSrc;
         }));
         /**
@@ -1324,7 +1330,7 @@ class NgxDocScannerComponent {
     /**
      * resize an image to fit constraints set in options.maxImageDimensions
      * @private
-     * @param {?=} image
+     * @param {?} image
      * @return {?}
      */
     resize(image) {
@@ -1332,7 +1338,7 @@ class NgxDocScannerComponent {
             this.processing.emit(true);
             setTimeout(() => {
                 /** @type {?} */
-                const src = cv.imread(this.editedImage);
+                const src = cv.imread(image);
                 /** @type {?} */
                 const currentDimensions = {
                     width: src.size().width,
@@ -1361,12 +1367,8 @@ class NgxDocScannerComponent {
                     resolve(resizeResult);
                 }
                 else {
-                    if (image) {
-                        resolve(image);
-                    }
-                    else {
-                        resolve(this.editedImage);
-                    }
+                    this.processing.emit(false);
+                    resolve(image);
                 }
             }, 30);
         });
