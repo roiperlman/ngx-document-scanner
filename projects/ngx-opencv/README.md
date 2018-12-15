@@ -47,17 +47,18 @@ Inject NgxOpenCVSerive to the constructor of your component / service etc. and s
 		  // subscribe to status of OpenCV module  
 		  this.ngxOpenCv.cvState.subscribe(
 		    (cvState: OpenCVState) => {  
-          // do something with the state string
-          this.cvState = cvState.state;  
-          this.ready.emit(cvState.ready);  
-          if (cvState.error) {
-            // handle errors
-          } else if (cvState.loading) {
-            // e.g. show loading indicator  
-            } else if (cvState.ready) {  
-              // do image processing stuff
-            }  
+		      // do something with the state string
+		      this.cvState = cvState.state;  
+		      this.ready.emit(cvState.ready);  
+		      if (cvState.error) {
+		        // handle errors
+		      } else if (cvState.loading) {
+		        // e.g. show loading indicator  
+		      } else if (cvState.ready) {  
+		        // do image processing stuff
+		      }  
 		  });
+		}
 
 **Note that loading and parsing of the OpenCV library is done synchronously, and might take some time while blocking execution of other processes, depending on client's device.** Therefore it's recommended to bind a loading indicator to the state observable. 
 
