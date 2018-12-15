@@ -5,9 +5,9 @@ It uses a [WASM](https://webassembly.org/) build of [OpenCV](https://opencv.org/
 Note that there are a few extra steps required to configure the component other than installing the package from npm.
 
 ## Live Demo
-View a live demo on https://roiperlman.github.io
+View a live demo **[here](https://roiperlman.github.io/ngx-document-scanner)**
 
-## Installing
+## Installation & Setup
 install the package via npm
 
     npm install ngx-document-scanner --save
@@ -15,17 +15,18 @@ install the package via npm
 copy the opencv.js files to your assets folder (or any other folder). you can build the files yourself ([instructions on the OpenCV site](https://docs.opencv.org/3.4/d4/da1/tutorial_js_setup.html)), or download them from this package's [repository](https://github.com/roiperlman/ngx-document-scanner).
 both opencv.js & opencv_js.wasm need to places in the same folder.
 
-import the package to your `app.module.ts` file. you'll need to configure the location of the open cv files.
+import the package to your `app.module`. you'll need to configure the location of the open cv files.
 	
-    import {OpenCvConfig} from 'ngx-document-scanner';
+    import {OpenCVConfig} from 'ngx-document-scanner';
     import {NgxDocumentScannerModule} from 'ngx-document-scanner';
-    //set the location of the OpenCV files
-    const OpenCvConfig: OpenCvConfig = {
+    
+    // set the location of the OpenCV files
+    const OpenCVConfig: OpenCVConfig = {
 	  openCvDirPath: '/assets/opencv'  
 	};
 	
     @NgModule({ imports: 
-      [NgxDocumentScannerModule.forRoot(OpenCvConfig)],
+      [NgxDocumentScannerModule.forRoot(OpenCVConfig)],
       bootstrap: [AppComponent]  
     })
     export class AppModule { }
@@ -35,13 +36,13 @@ import the package to your `app.module.ts` file. you'll need to configure the lo
 #### add component to template and bind to inputs and outputs.
 
     <ngx-doc-scanner 
-				 *ngIf="image"
-                 [file]="image"
-                 (editResult)="editResult($event)"
-                 (exitEditor)="exitEditor($event)"
-                 (error)="onError($event)"
-                 (processing)="editorState($event)"
-                 [config]="config">
+         *ngIf="image"
+         [file]="image"
+         [config]="config">
+         (editResult)="editResult($event)"
+         (exitEditor)="exitEditor($event)"
+         (error)="onError($event)"
+         (processing)="editorState($event)"
     </ngx-doc-scanner>
 
 #### set configuration options. for example:
@@ -50,7 +51,8 @@ import the package to your `app.module.ts` file. you'll need to configure the lo
 	    editorBackgroundColor: '#fafafa', 
 	    buttonThemeColor: 'primary',  
 	    cropToolColor: '#ff4081',  
-	    cropToolShape: 'circle'  
+	    cropToolShape: 'circle',
+	    exportImageIcon: 'cloud_download'  
     };
 
 ## Component I\O
@@ -71,10 +73,6 @@ import the package to your `app.module.ts` file. you'll need to configure the lo
 |**processing**|`EventEmitter<boolean>`|fires true when the editor is prcessing or loading\parsing the OpenCV module.
 
 
-##  editResult  
-  
-**● editResult**: *`EventEmitter`<`any`>* =  new EventEmitter<any>()
-
 <a id="config"></a>
 ## Configuration Object
 optional configuration values that can be passed to the component. 
@@ -84,7 +82,7 @@ optional configuration values that can be passed to the component.
 	    ....
     }
 
-| poperty | type | description |
+| property | type | description |
 |--|--|--|
 |**buttonThemeColor** | "primary" &#124; "warn" &#124; "accent"  | material design theme color name  for the buttons on the component|
 |**cropToolColor**|`string`|color of the crop tool (points and connecting lines)  |
@@ -98,6 +96,8 @@ optional configuration values that can be passed to the component.
 |**maxImageDimensions**  | `{width: number; height: nubmer;}` | max dimensions of oputput image. if set to zero will not resize the image.|
 |**maxPreviewWidth**  | `number`|max width of the preview pane|
 
+## Ngx-OpenCV
+The angular service used to load the open cv library and monitor it's state is also available as a standalone package: [NgxOpenCV](https://www.npmjs.com/ngx-opencv)
 
 ## License  
   

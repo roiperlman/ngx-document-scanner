@@ -23,6 +23,12 @@
       ],
       "ngx-document-scanner/*": [
         "dist/ngx-document-scanner/*"
+      ],
+      "ngx-opencv": [
+        "dist/ngx-opencv"
+      ],
+      "ngx-opencv/*": [
+        "dist/ngx-opencv/*"
       ]
     }
   },

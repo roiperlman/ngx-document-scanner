@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {DocScannerConfig} from '../../../../../ngx-document-scanner/src/lib/PublicModels';
-import {DimensionsService} from '../../services/dimensions.service';
 
 @Component({
   selector: 'app-demo',
@@ -13,23 +12,28 @@ export class DemoComponent {
   image: File;
   processing: boolean;
   test: boolean;
-  divHeight: string;
   config: DocScannerConfig = {
     editorBackgroundColor: '#fafafa',
     buttonThemeColor: 'primary',
     cropToolColor: '#ff4081',
-    cropToolShape: 'rect'
+    cropToolShape: 'rect',
+    cropToolDimensions: {
+      width: 16,
+      height: 16
+    },
+    exportImageIcon: 'cloud_download',
+    editorDimensions: {
+      width: '99vw',
+      height: '82vh'
+    },
+    extraCss: {
+      position: 'absolute',
+      top: 0,
+      left: 0
+    }
   };
 
-  constructor(public dimensions: DimensionsService) {
-    this.dimensions.height.subscribe(height => {
-      this.config.editorDimensions = {
-        width: '100vw',
-        height: height
-      };
-      this.divHeight = height;
-    });
-  }
+  constructor() {}
 
   // ******************* //
   // file input handlers //
@@ -37,11 +41,13 @@ export class DemoComponent {
   dropFile(event) {
     event.preventDefault();
     event.stopPropagation();
-    const file = event.dataTransfer.files.item(0);
-    if (this.isImage(file)) {
-      this.loadFile(file);
-    } else {
-      this.overZone = false;
+    if (event.dataTransfer.files.item(0)) {
+      const file = event.dataTransfer.files.item(0);
+      if (this.isImage(file)) {
+        this.loadFile(file);
+      } else {
+        this.overZone = false;
+      }
     }
   }
 

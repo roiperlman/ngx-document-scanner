@@ -1,9 +1,8 @@
-import {AfterViewChecked, AfterViewInit, Component, EventEmitter, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Output, ViewChild} from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {MatToolbar} from '@angular/material';
-import {DimensionsService} from '../../services/dimensions.service';
 
 @Component({
   selector: 'app-side-nav',
@@ -23,7 +22,7 @@ export class SideNavComponent implements AfterViewInit {
       map(result => result.matches)
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, private dimensions: DimensionsService) {
+  constructor(private breakpointObserver: BreakpointObserver) {
   }
 
   ngAfterViewInit() {
@@ -32,14 +31,9 @@ export class SideNavComponent implements AfterViewInit {
       this.outletCss = {
         width: '100vw',
         'max-width': '100vw',
-        height: `calc(100vh - ${this.topMargin})`,
-        'max-height': `calc(100vh - ${this.topMargin})`,
-        top: this.topMargin,
-        left: 0,
         right: 0,
       };
-      this.dimensions.setHeight(this.outletCss.height);
-    }, 20);
+    }, 10);
   }
 
 

@@ -1,0 +1,26 @@
+{
+  "name": "ngx-opencv",
+  "version": "1.0.0",
+  "peerDependencies": {
+    "@angular/common": "^7.0.0",
+    "@angular/core": "^7.0.0"
+  },
+  "keywords": [
+    "opencv",
+    "camscanner",
+    "scanner",
+    "image processing",
+    "document",
+    "angular",
+    "OpenCVJS",
+    "image manipulation",
+    "crop"
+  ],
+  "description": "Angular service for implementing the OpenCV library in angular based applications",
+  "author": "RoiP",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/roiperlman/ngx-document-scanner.git"
+  }
+}

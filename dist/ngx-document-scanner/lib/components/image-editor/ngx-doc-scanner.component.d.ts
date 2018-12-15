@@ -2,7 +2,7 @@ import { EventEmitter, OnInit } from '@angular/core';
 import { LimitsService } from '../../services/limits.service';
 import { MatBottomSheet } from '@angular/material';
 import { PointShape } from '../../PrivateModels';
-import { NgxOpenCvService } from '../../services/ngx-open-cv.service';
+import { NgxOpenCVService } from '../../services/ngx-opencv.service';
 import { ImageDimensions, DocScannerConfig } from '../../PublicModels';
 import { EditorActionButton, PointOptions } from '../../PrivateModels';
 export declare class NgxDocScannerComponent implements OnInit {
@@ -114,7 +114,7 @@ export declare class NgxDocScannerComponent implements OnInit {
      * editor configuration object
      */
     config: DocScannerConfig;
-    constructor(ngxOpenCv: NgxOpenCvService, limitsService: LimitsService, bottomSheet: MatBottomSheet);
+    constructor(ngxOpenCv: NgxOpenCVService, limitsService: LimitsService, bottomSheet: MatBottomSheet);
     ngOnInit(): void;
     /**
      * emits the exitEditor event

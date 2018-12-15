@@ -11,16 +11,17 @@ import {
   MatSidenavModule,
   MatListModule
 } from '@angular/material';
-import {OpenCvConfig} from 'ngx-document-scanner';
+
 import {NgxDocumentScannerModule} from 'ngx-document-scanner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { RoutingModule } from './routing.module';
 import { DemoComponent } from './components/demo/demo.component';
+import {OpenCVConfig} from '../../../ngx-document-scanner/src/lib/PublicModels';
 
-const OpenCvConfig: OpenCvConfig = {
-  openCvDirPath: '/assets/opencv'
+const OpenCvConfig: OpenCVConfig = {
+  openCVDirPath: './assets/opencv'
 };
 
 @NgModule({

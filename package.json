@@ -3,9 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "build_lib": "ng build ngx-document-scanner",
-    "build_demo_app": "ng build ngx-ds-demo-app --prod --base-href /ngx-document-scanner/ && npx ngh --dir=dist/ngx-ds-demo-app",
-    "serve_demo_app": "ng serve ngx-ds-demo-app --port 4200"
+    "build_lib_doc_scanner": "ng build ngx-document-scanner",
+    "build_lib_opencv": "ng build ngx-opencv",
+    "build_demo_app": "ng build ngx-ds-demo-app --prod --base-href /ngx-document-scanner/ && npx ngh --dir=dist/ngx-ds-demo-app --no-silent --repo=https://github.com/roiperlman/ngx-document-scanner.git",
+    "serve_demo_app": "ng serve ngx-ds-demo-app --port 4200",
+    "publish": "npx ngh --dir=dist/ngx-ds-demo-app --no-silent --repo=https://github.com/roiperlman/ngx-document-scanner.git"
   },
   "private": true,
   "dependencies": {

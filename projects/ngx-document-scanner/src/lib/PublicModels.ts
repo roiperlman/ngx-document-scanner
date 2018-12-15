@@ -3,7 +3,7 @@
  */
 import {PointShape} from './PrivateModels';
 
-export interface OpenCvState {
+export interface OpenCVState {
   ready: boolean;
   loading: boolean;
   error: boolean;
@@ -71,7 +71,7 @@ export interface DocScannerConfig {
 /**
  * describes a configuration object for the OpenCV service
  */
-export interface OpenCvConfig {
+export interface OpenCVConfig {
   /**
    * path to the directory containing the OpenCV files, in the form of '/path/to/<opencv directory>'
    * directory must contain the the following files:
@@ -79,7 +79,7 @@ export interface OpenCvConfig {
    * ----opencv.js
    * ----opencv_js.wasm
    */
-  openCvDirPath?: string;
+  openCVDirPath?: string;
   /**
    * additional callback that will run when OpenCv has finished loading and parsing
    */

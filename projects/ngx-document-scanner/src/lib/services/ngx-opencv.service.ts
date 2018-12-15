@@ -1,23 +1,23 @@
 import {Inject, Injectable, InjectionToken, NgZone} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {OpenCvConfig, OpenCvState} from '../PublicModels';
+import {OpenCVConfig, OpenCVState} from '../PublicModels';
 
-export const OpenCvConfigToken = new InjectionToken<OpenCvConfig>('OpenCV config object token');
+export const OpenCvConfigToken = new InjectionToken<OpenCVConfig>('OpenCV config object token');
 
 @Injectable({
   providedIn: 'root'
 })
-export class NgxOpenCvService {
+export class NgxOpenCVService {
 
-  cvState = new BehaviorSubject<OpenCvState>({
+  cvState = new BehaviorSubject<OpenCVState>({
     ready: false,
     error: false,
     loading: true,
     state: 'loading'
   });
-  configModule: OpenCvConfigModule;
+  configModule: OpenCVConfigModule;
 
-  constructor(@Inject(OpenCvConfigToken) options: OpenCvConfig, private _ngZone: NgZone) {
+  constructor(@Inject(OpenCvConfigToken) options: OpenCVConfig, private _ngZone: NgZone) {
     if (!options) {
       options = {};
     }
@@ -60,8 +60,8 @@ export class NgxOpenCvService {
    * generates a new state object
    * @param change - the new state of the module
    */
-  private newState(change: 'loading'|'ready'|'error'): OpenCvState {
-    const newStateObj: OpenCvState = {
+  private newState(change: 'loading'|'ready'|'error'): OpenCVState {
+    const newStateObj: OpenCVState = {
       ready: false,
       loading: false,
       error: false,
@@ -84,9 +84,9 @@ export class NgxOpenCvService {
    * generates a config module for the global Module object
    * @param options - configuration options
    */
-  private generateConfigModule(options: OpenCvConfig): OpenCvConfigModule {
+  private generateConfigModule(options: OpenCVConfig): OpenCVConfigModule {
     return {
-      scriptUrl: options.openCvDirPath ? `${options.openCvDirPath}/opencv.js` : `/assets/opencv/opencv.js`,
+      scriptUrl: options.openCVDirPath ? `${options.openCVDirPath}/opencv.js` : `/assets/opencv/opencv.js`,
       wasmBinaryFile: 'opencv_js.wasm',
       usingWasm: true,
       onRuntimeInitialized: () => {
@@ -105,10 +105,11 @@ export class NgxOpenCvService {
 /**
  * describes the global Module object that is used to initiate OpenCV.js
  */
-interface OpenCvConfigModule {
+interface OpenCVConfigModule {
   scriptUrl: string;
   wasmBinaryFile: string;
   usingWasm: boolean;
   onRuntimeInitialized: Function;
 }
+
 

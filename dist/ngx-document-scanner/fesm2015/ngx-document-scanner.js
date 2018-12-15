@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 import { __awaiter } from 'tslib';
-import { Inject, Injectable, InjectionToken, NgZone, Component, EventEmitter, Output, Input, ViewChild, NgModule, defineInjectable, inject, ElementRef } from '@angular/core';
+import { Inject, Injectable, InjectionToken, NgZone, Component, Input, ViewChild, NgModule, EventEmitter, Output, defineInjectable, inject, ElementRef } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef, MatBottomSheet, MatBottomSheetModule, MatButtonModule, MatIconModule, MatListModule } from '@angular/material';
 import { AngularDraggableModule } from 'angular2-draggable';
@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
  */
 /** @type {?} */
 const OpenCvConfigToken = new InjectionToken('OpenCV config object token');
-class NgxOpenCvService {
+class NgxOpenCVService {
     /**
      * @param {?} options
      * @param {?} _ngZone
@@ -98,7 +98,7 @@ class NgxOpenCvService {
      */
     generateConfigModule(options) {
         return {
-            scriptUrl: options.openCvDirPath ? `${options.openCvDirPath}/opencv.js` : `/assets/opencv/opencv.js`,
+            scriptUrl: options.openCVDirPath ? `${options.openCVDirPath}/opencv.js` : `/assets/opencv/opencv.js`,
             wasmBinaryFile: 'opencv_js.wasm',
             usingWasm: true,
             onRuntimeInitialized: () => {
@@ -113,17 +113,17 @@ class NgxOpenCvService {
         };
     }
 }
-NgxOpenCvService.decorators = [
+NgxOpenCVService.decorators = [
     { type: Injectable, args: [{
                 providedIn: 'root'
             },] }
 ];
 /** @nocollapse */
-NgxOpenCvService.ctorParameters = () => [
+NgxOpenCVService.ctorParameters = () => [
     { type: undefined, decorators: [{ type: Inject, args: [OpenCvConfigToken,] }] },
     { type: NgZone }
 ];
-/** @nocollapse */ NgxOpenCvService.ngInjectableDef = defineInjectable({ factory: function NgxOpenCvService_Factory() { return new NgxOpenCvService(inject(OpenCvConfigToken), inject(NgZone)); }, token: NgxOpenCvService, providedIn: "root" });
+/** @nocollapse */ NgxOpenCVService.ngInjectableDef = defineInjectable({ factory: function NgxOpenCVService_Factory() { return new NgxOpenCVService(inject(OpenCvConfigToken), inject(NgZone)); }, token: NgxOpenCVService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
@@ -535,7 +535,7 @@ class NgxDraggablePointComponent {
 NgxDraggablePointComponent.decorators = [
     { type: Component, args: [{
                 selector: 'ngx-draggable-point',
-                template: "<div #point ngDraggable=\"draggable\"\n     (movingOffset)=\"positionChange($event)\"\n     [ngStyle]=\"pointStyle()\"\n     [position]=\"position\"\n     [bounds]=\"container\"\n     [inBounds]=\"true\"\n     (endOffset)=\"movementEnd($event)\"\n      style=\"z-index: 1000\">\n</div>\n"
+                template: "<div #point ngDraggable=\"draggable\"\r\n     (movingOffset)=\"positionChange($event)\"\r\n     [ngStyle]=\"pointStyle()\"\r\n     [position]=\"position\"\r\n     [bounds]=\"container\"\r\n     [inBounds]=\"true\"\r\n     (endOffset)=\"movementEnd($event)\"\r\n      style=\"z-index: 1000\">\r\n</div>\r\n"
             }] }
 ];
 /** @nocollapse */
@@ -746,7 +746,7 @@ class NgxShapeOutlineComponent {
 NgxShapeOutlineComponent.decorators = [
     { type: Component, args: [{
                 selector: 'ngx-shape-outine',
-                template: "<canvas #outline\n        style=\"position: fixed; z-index: 1000\"\n        [ngStyle]=\"{width: dimensions.width + 'px', height: dimensions.height + 'px'}\"\n        *ngIf=\"dimensions\">\n</canvas>\n"
+                template: "<canvas #outline\r\n        style=\"position: absolute; z-index: 1000\"\r\n        [ngStyle]=\"{width: dimensions.width + 'px', height: dimensions.height + 'px'}\"\r\n        *ngIf=\"dimensions\">\r\n</canvas>\r\n"
             }] }
 ];
 /** @nocollapse */
@@ -1099,36 +1099,37 @@ class NgxDocScannerComponent {
     rotateImage() {
         return new Promise((resolve, reject) => {
             this.processing.emit(true);
-            /** @type {?} */
-            const src = cv.imread(this.editedImage);
-            /** @type {?} */
-            const dst = new cv.Mat();
-            cv.transpose(src, dst);
-            cv.flip(dst, dst, 1);
-            cv.imshow(this.editedImage, dst);
-            src.delete();
-            dst.delete();
-            // save current preview dimensions and positions
-            /** @type {?} */
-            const initialPreviewDimensions = { width: 0, height: 0 };
-            Object.assign(initialPreviewDimensions, this.previewDimensions);
-            /** @type {?} */
-            const initialPositions = Array.from(this.points);
-            // get new dimensions
-            // set new preview pane dimensions
-            this.setPreviewPaneDimensions(this.editedImage);
-            // get preview pane resize ratio
-            /** @type {?} */
-            const previewResizeRatios = {
-                width: this.previewDimensions.width / initialPreviewDimensions.width,
-                height: this.previewDimensions.height / initialPreviewDimensions.height
-            };
-            // set new preview pane dimensions
-            this.limitsService.rotateClockwise(previewResizeRatios, initialPreviewDimensions, initialPositions);
-            this.showPreview().then(() => {
-                this.processing.emit(false);
-                resolve();
-            });
+            setTimeout(() => {
+                /** @type {?} */
+                const dst = cv.imread(this.editedImage);
+                // const dst = new cv.Mat();
+                cv.transpose(dst, dst);
+                cv.flip(dst, dst, 1);
+                cv.imshow(this.editedImage, dst);
+                // src.delete();
+                dst.delete();
+                // save current preview dimensions and positions
+                /** @type {?} */
+                const initialPreviewDimensions = { width: 0, height: 0 };
+                Object.assign(initialPreviewDimensions, this.previewDimensions);
+                /** @type {?} */
+                const initialPositions = Array.from(this.points);
+                // get new dimensions
+                // set new preview pane dimensions
+                this.setPreviewPaneDimensions(this.editedImage);
+                // get preview pane resize ratio
+                /** @type {?} */
+                const previewResizeRatios = {
+                    width: this.previewDimensions.width / initialPreviewDimensions.width,
+                    height: this.previewDimensions.height / initialPreviewDimensions.height
+                };
+                // set new preview pane dimensions
+                this.limitsService.rotateClockwise(previewResizeRatios, initialPreviewDimensions, initialPositions);
+                this.showPreview().then(() => {
+                    this.processing.emit(false);
+                    resolve();
+                });
+            }, 30);
         });
     }
     /**
@@ -1139,46 +1140,48 @@ class NgxDocScannerComponent {
      */
     detectContours() {
         return new Promise((resolve, reject) => {
-            // this.processing.emit(true);
-            // load the image and compute the ratio of the old height to the new height, clone it, and resize it
-            /** @type {?} */
-            const processingResizeRatio = 0.5;
-            /** @type {?} */
-            const dst = cv.imread(this.editedImage);
-            /** @type {?} */
-            const dsize = new cv.Size(dst.rows * processingResizeRatio, dst.cols * processingResizeRatio);
-            /** @type {?} */
-            const ksize = new cv.Size(5, 5);
-            // convert the image to grayscale, blur it, and find edges in the image
-            cv.cvtColor(dst, dst, cv.COLOR_RGBA2GRAY, 0);
-            cv.GaussianBlur(dst, dst, ksize, 0, 0, cv.BORDER_DEFAULT);
-            cv.Canny(dst, dst, 75, 200);
-            // find contours
-            cv.threshold(dst, dst, 120, 200, cv.THRESH_BINARY);
-            /** @type {?} */
-            const contours = new cv.MatVector();
-            /** @type {?} */
-            const hierarchy = new cv.Mat();
-            cv.findContours(dst, contours, hierarchy, cv.RETR_CCOMP, cv.CHAIN_APPROX_SIMPLE);
-            /** @type {?} */
-            const rect = cv.boundingRect(dst);
-            dst.delete();
-            hierarchy.delete();
-            contours.delete();
-            // transform the rectangle into a set of points
-            Object.keys(rect).forEach(key => {
-                rect[key] = rect[key] * this.imageResizeRatio;
-            });
-            /** @type {?} */
-            const contourCoordinates = [
-                new PositionChangeData({ x: rect.x, y: rect.y }, ['left', 'top']),
-                new PositionChangeData({ x: rect.x + rect.width, y: rect.y }, ['right', 'top']),
-                new PositionChangeData({ x: rect.x + rect.width, y: rect.y + rect.height }, ['right', 'bottom']),
-                new PositionChangeData({ x: rect.x, y: rect.y + rect.height }, ['left', 'bottom']),
-            ];
-            this.limitsService.repositionPoints(contourCoordinates);
-            // this.processing.emit(false);
-            resolve();
+            this.processing.emit(true);
+            setTimeout(() => {
+                // load the image and compute the ratio of the old height to the new height, clone it, and resize it
+                /** @type {?} */
+                const processingResizeRatio = 0.5;
+                /** @type {?} */
+                const dst = cv.imread(this.editedImage);
+                /** @type {?} */
+                const dsize = new cv.Size(dst.rows * processingResizeRatio, dst.cols * processingResizeRatio);
+                /** @type {?} */
+                const ksize = new cv.Size(5, 5);
+                // convert the image to grayscale, blur it, and find edges in the image
+                cv.cvtColor(dst, dst, cv.COLOR_RGBA2GRAY, 0);
+                cv.GaussianBlur(dst, dst, ksize, 0, 0, cv.BORDER_DEFAULT);
+                cv.Canny(dst, dst, 75, 200);
+                // find contours
+                cv.threshold(dst, dst, 120, 200, cv.THRESH_BINARY);
+                /** @type {?} */
+                const contours = new cv.MatVector();
+                /** @type {?} */
+                const hierarchy = new cv.Mat();
+                cv.findContours(dst, contours, hierarchy, cv.RETR_CCOMP, cv.CHAIN_APPROX_SIMPLE);
+                /** @type {?} */
+                const rect = cv.boundingRect(dst);
+                dst.delete();
+                hierarchy.delete();
+                contours.delete();
+                // transform the rectangle into a set of points
+                Object.keys(rect).forEach(key => {
+                    rect[key] = rect[key] * this.imageResizeRatio;
+                });
+                /** @type {?} */
+                const contourCoordinates = [
+                    new PositionChangeData({ x: rect.x, y: rect.y }, ['left', 'top']),
+                    new PositionChangeData({ x: rect.x + rect.width, y: rect.y }, ['right', 'top']),
+                    new PositionChangeData({ x: rect.x + rect.width, y: rect.y + rect.height }, ['right', 'bottom']),
+                    new PositionChangeData({ x: rect.x, y: rect.y + rect.height }, ['left', 'bottom']),
+                ];
+                this.limitsService.repositionPoints(contourCoordinates);
+                // this.processing.emit(false);
+                resolve();
+            }, 30);
         });
     }
     /**
@@ -1189,65 +1192,64 @@ class NgxDocScannerComponent {
     transform() {
         return new Promise((resolve, reject) => {
             this.processing.emit(true);
-            /** @type {?} */
-            const src = cv.imread(this.editedImage);
-            /** @type {?} */
-            const dst = new cv.Mat();
-            // create source coordinates matrix
-            /** @type {?} */
-            const sourceCoordinates = [
-                this.getPoint(['top', 'left']),
-                this.getPoint(['top', 'right']),
-                this.getPoint(['bottom', 'right']),
-                this.getPoint(['bottom', 'left'])
-            ].map(point => {
-                return [point.x / this.imageResizeRatio, point.y / this.imageResizeRatio];
-            });
-            // get max width
-            /** @type {?} */
-            const bottomWidth = this.getPoint(['bottom', 'right']).x - this.getPoint(['bottom', 'left']).x;
-            /** @type {?} */
-            const topWidth = this.getPoint(['top', 'right']).x - this.getPoint(['top', 'left']).x;
-            /** @type {?} */
-            const maxWidth = Math.max(bottomWidth, topWidth) / this.imageResizeRatio;
-            // get max height
-            /** @type {?} */
-            const leftHeight = this.getPoint(['bottom', 'left']).y - this.getPoint(['top', 'left']).y;
-            /** @type {?} */
-            const rightHeight = this.getPoint(['bottom', 'right']).y - this.getPoint(['top', 'right']).y;
-            /** @type {?} */
-            const maxHeight = Math.max(leftHeight, rightHeight) / this.imageResizeRatio;
-            // create dest coordinates matrix
-            /** @type {?} */
-            const destCoordinates = [
-                [0, 0],
-                [maxWidth - 1, 0],
-                [maxWidth - 1, maxHeight - 1],
-                [0, maxHeight - 1]
-            ];
-            // convert to open cv matrix objects
-            /** @type {?} */
-            const Ms = cv.matFromArray(4, 1, cv.CV_32FC2, [].concat(...sourceCoordinates));
-            /** @type {?} */
-            const Md = cv.matFromArray(4, 1, cv.CV_32FC2, [].concat(...destCoordinates));
-            /** @type {?} */
-            const transformMatrix = cv.getPerspectiveTransform(Ms, Md);
-            // set new image size
-            /** @type {?} */
-            const dsize = new cv.Size(maxWidth, maxHeight);
-            // perform warp
-            cv.warpPerspective(src, dst, transformMatrix, dsize, cv.INTER_LINEAR, cv.BORDER_CONSTANT, new cv.Scalar());
-            cv.imshow(this.editedImage, dst);
-            src.delete();
-            dst.delete();
-            Ms.delete();
-            Md.delete();
-            transformMatrix.delete();
-            this.setPreviewPaneDimensions(this.editedImage);
-            this.showPreview().then(() => {
-                this.processing.emit(false);
-                resolve();
-            });
+            setTimeout(() => {
+                /** @type {?} */
+                const dst = cv.imread(this.editedImage);
+                // create source coordinates matrix
+                /** @type {?} */
+                const sourceCoordinates = [
+                    this.getPoint(['top', 'left']),
+                    this.getPoint(['top', 'right']),
+                    this.getPoint(['bottom', 'right']),
+                    this.getPoint(['bottom', 'left'])
+                ].map(point => {
+                    return [point.x / this.imageResizeRatio, point.y / this.imageResizeRatio];
+                });
+                // get max width
+                /** @type {?} */
+                const bottomWidth = this.getPoint(['bottom', 'right']).x - this.getPoint(['bottom', 'left']).x;
+                /** @type {?} */
+                const topWidth = this.getPoint(['top', 'right']).x - this.getPoint(['top', 'left']).x;
+                /** @type {?} */
+                const maxWidth = Math.max(bottomWidth, topWidth) / this.imageResizeRatio;
+                // get max height
+                /** @type {?} */
+                const leftHeight = this.getPoint(['bottom', 'left']).y - this.getPoint(['top', 'left']).y;
+                /** @type {?} */
+                const rightHeight = this.getPoint(['bottom', 'right']).y - this.getPoint(['top', 'right']).y;
+                /** @type {?} */
+                const maxHeight = Math.max(leftHeight, rightHeight) / this.imageResizeRatio;
+                // create dest coordinates matrix
+                /** @type {?} */
+                const destCoordinates = [
+                    [0, 0],
+                    [maxWidth - 1, 0],
+                    [maxWidth - 1, maxHeight - 1],
+                    [0, maxHeight - 1]
+                ];
+                // convert to open cv matrix objects
+                /** @type {?} */
+                const Ms = cv.matFromArray(4, 1, cv.CV_32FC2, [].concat(...sourceCoordinates));
+                /** @type {?} */
+                const Md = cv.matFromArray(4, 1, cv.CV_32FC2, [].concat(...destCoordinates));
+                /** @type {?} */
+                const transformMatrix = cv.getPerspectiveTransform(Ms, Md);
+                // set new image size
+                /** @type {?} */
+                const dsize = new cv.Size(maxWidth, maxHeight);
+                // perform warp
+                cv.warpPerspective(dst, dst, transformMatrix, dsize, cv.INTER_LINEAR, cv.BORDER_CONSTANT, new cv.Scalar());
+                cv.imshow(this.editedImage, dst);
+                dst.delete();
+                Ms.delete();
+                Md.delete();
+                transformMatrix.delete();
+                this.setPreviewPaneDimensions(this.editedImage);
+                this.showPreview().then(() => {
+                    this.processing.emit(false);
+                    resolve();
+                });
+            }, 30);
         });
     }
     /**
@@ -1292,29 +1294,31 @@ class NgxDocScannerComponent {
                     options.thMeanCorrection = 15;
                     break;
             }
-            if (options.grayScale) {
-                cv.cvtColor(dst, dst, cv.COLOR_RGBA2GRAY, 0);
-            }
-            if (options.blur) {
-                /** @type {?} */
-                const ksize = new cv.Size(5, 5);
-                cv.GaussianBlur(dst, dst, ksize, 0, 0, cv.BORDER_DEFAULT);
-            }
-            if (options.th) {
+            setTimeout(() => __awaiter(this, void 0, void 0, function* () {
                 if (options.grayScale) {
-                    cv.adaptiveThreshold(dst, dst, options.thMax, options.thMode, cv.THRESH_BINARY, options.thBlockSize, options.thMeanCorrection);
+                    cv.cvtColor(dst, dst, cv.COLOR_RGBA2GRAY, 0);
                 }
-                else {
-                    dst.convertTo(dst, -1, 1, 60);
-                    cv.threshold(dst, dst, 170, 255, cv.THRESH_BINARY);
+                if (options.blur) {
+                    /** @type {?} */
+                    const ksize = new cv.Size(5, 5);
+                    cv.GaussianBlur(dst, dst, ksize, 0, 0, cv.BORDER_DEFAULT);
                 }
-            }
-            if (!preview) {
-                cv.imshow(this.editedImage, dst);
-            }
-            yield this.showPreview(dst);
-            this.processing.emit(false);
-            resolve();
+                if (options.th) {
+                    if (options.grayScale) {
+                        cv.adaptiveThreshold(dst, dst, options.thMax, options.thMode, cv.THRESH_BINARY, options.thBlockSize, options.thMeanCorrection);
+                    }
+                    else {
+                        dst.convertTo(dst, -1, 1, 60);
+                        cv.threshold(dst, dst, 170, 255, cv.THRESH_BINARY);
+                    }
+                }
+                if (!preview) {
+                    cv.imshow(this.editedImage, dst);
+                }
+                yield this.showPreview(dst);
+                this.processing.emit(false);
+                resolve();
+            }), 30);
         }));
     }
     /**
@@ -1326,43 +1330,45 @@ class NgxDocScannerComponent {
     resize(image) {
         return new Promise((resolve, reject) => {
             this.processing.emit(true);
-            /** @type {?} */
-            const src = cv.imread(this.editedImage);
-            /** @type {?} */
-            const currentDimensions = {
-                width: src.size().width,
-                height: src.size().height
-            };
-            /** @type {?} */
-            const resizeDimensions = {
-                width: 0,
-                height: 0
-            };
-            if (currentDimensions.width > this.options.maxImageDimensions.width) {
-                resizeDimensions.width = this.options.maxImageDimensions.width;
-                resizeDimensions.height = this.options.maxImageDimensions.width / currentDimensions.width * currentDimensions.height;
-                if (resizeDimensions.height > this.options.maxImageDimensions.height) {
-                    resizeDimensions.height = this.options.maxImageDimensions.height;
-                    resizeDimensions.width = this.options.maxImageDimensions.height / currentDimensions.height * currentDimensions.width;
-                }
+            setTimeout(() => {
                 /** @type {?} */
-                const dsize = new cv.Size(Math.floor(resizeDimensions.width), Math.floor(resizeDimensions.height));
-                cv.resize(src, src, dsize, 0, 0, cv.INTER_AREA);
+                const src = cv.imread(this.editedImage);
                 /** @type {?} */
-                const resizeResult = (/** @type {?} */ (document.createElement('canvas')));
-                cv.imshow(resizeResult, src);
-                src.delete();
-                this.processing.emit(false);
-                resolve(resizeResult);
-            }
-            else {
-                if (image) {
-                    resolve(image);
+                const currentDimensions = {
+                    width: src.size().width,
+                    height: src.size().height
+                };
+                /** @type {?} */
+                const resizeDimensions = {
+                    width: 0,
+                    height: 0
+                };
+                if (currentDimensions.width > this.options.maxImageDimensions.width) {
+                    resizeDimensions.width = this.options.maxImageDimensions.width;
+                    resizeDimensions.height = this.options.maxImageDimensions.width / currentDimensions.width * currentDimensions.height;
+                    if (resizeDimensions.height > this.options.maxImageDimensions.height) {
+                        resizeDimensions.height = this.options.maxImageDimensions.height;
+                        resizeDimensions.width = this.options.maxImageDimensions.height / currentDimensions.height * currentDimensions.width;
+                    }
+                    /** @type {?} */
+                    const dsize = new cv.Size(Math.floor(resizeDimensions.width), Math.floor(resizeDimensions.height));
+                    cv.resize(src, src, dsize, 0, 0, cv.INTER_AREA);
+                    /** @type {?} */
+                    const resizeResult = (/** @type {?} */ (document.createElement('canvas')));
+                    cv.imshow(resizeResult, src);
+                    src.delete();
+                    this.processing.emit(false);
+                    resolve(resizeResult);
                 }
                 else {
-                    resolve(this.editedImage);
+                    if (image) {
+                        resolve(image);
+                    }
+                    else {
+                        resolve(this.editedImage);
+                    }
                 }
-            }
+            }, 30);
         });
     }
     /**
@@ -1427,9 +1433,9 @@ class NgxDocScannerComponent {
         const ratio = width / height;
         /** @type {?} */
         const maxWidth = this.screenDimensions.width > this.maxPreviewWidth ?
-            this.maxPreviewWidth : this.screenDimensions.width - 20;
+            this.maxPreviewWidth : this.screenDimensions.width - 40;
         /** @type {?} */
-        const maxHeight = this.screenDimensions.height - 200;
+        const maxHeight = this.screenDimensions.height - 240;
         /** @type {?} */
         const calculated = {
             width: maxWidth,
@@ -1457,13 +1463,13 @@ class NgxDocScannerComponent {
 NgxDocScannerComponent.decorators = [
     { type: Component, args: [{
                 selector: 'ngx-doc-scanner',
-                template: "<div [ngStyle]=\"editorStyle\" fxLayoutAlign=\"space-around\">\n  <div #imageContainer [ngStyle]=\"imageDivStyle\" style=\"margin: auto;\" >\n    <ng-container *ngIf=\"imageLoaded && mode === 'crop'\">\n      <ngx-shape-outine #shapeOutline [color]=\"options.cropToolColor\" [weight]=\"options.cropToolLineWeight\" [dimensions]=\"previewDimensions\"></ngx-shape-outine>\n      <ngx-draggable-point #topLeft [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: 0, y: 0}\" [limitRoles]=\"['top', 'left']\" [container]=\"imageContainer\"></ngx-draggable-point>\n      <ngx-draggable-point #topRight [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: previewDimensions.width, y: 0}\" [limitRoles]=\"['top', 'right']\" [container]=\"imageContainer\"></ngx-draggable-point>\n      <ngx-draggable-point #bottomLeft [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: 0, y: previewDimensions.height}\" [limitRoles]=\"['bottom', 'left']\" [container]=\"imageContainer\"></ngx-draggable-point>\n      <ngx-draggable-point #bottomRight [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: previewDimensions.width, y: previewDimensions.height}\" [limitRoles]=\"['bottom', 'right']\" [container]=\"imageContainer\"></ngx-draggable-point>\n    </ng-container>\n    <canvas #PreviewCanvas [ngStyle]=\"{'max-width': options.maxPreviewWidth}\" style=\"z-index: 5\" ></canvas>\n  </div>\n  <div class=\"editor-actions\" fxLayout=\"row\" fxLayoutAlign=\"space-around\" style=\"position: absolute; bottom: 0; width: 100vw\">\n    <ng-container *ngFor=\"let button of displayedButtons\" [ngSwitch]=\"button.type\">\n      <button mat-mini-fab *ngSwitchCase=\"'fab'\" [name]=\"button.name\" (click)=\"button.action()\" [color]=\"options.buttonThemeColor\">\n        <mat-icon>{{button.icon}}</mat-icon>\n      </button>\n      <button mat-raised-button *ngSwitchCase=\"'button'\" [name]=\"button.name\" (click)=\"button.action()\" [color]=\"options.buttonThemeColor\">\n        <mat-icon>{{button.icon}}</mat-icon>\n        <span>{{button.text}}}</span>\n      </button>\n    </ng-container>\n  </div>\n</div>\n\n\n",
+                template: "<div [ngStyle]=\"editorStyle\" fxLayoutAlign=\"space-around\">\r\n  <div #imageContainer [ngStyle]=\"imageDivStyle\" style=\"margin: auto;\" >\r\n    <ng-container *ngIf=\"imageLoaded && mode === 'crop'\">\r\n      <ngx-shape-outine #shapeOutline [color]=\"options.cropToolColor\" [weight]=\"options.cropToolLineWeight\" [dimensions]=\"previewDimensions\"></ngx-shape-outine>\r\n      <ngx-draggable-point #topLeft [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: 0, y: 0}\" [limitRoles]=\"['top', 'left']\" [container]=\"imageContainer\"></ngx-draggable-point>\r\n      <ngx-draggable-point #topRight [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: previewDimensions.width, y: 0}\" [limitRoles]=\"['top', 'right']\" [container]=\"imageContainer\"></ngx-draggable-point>\r\n      <ngx-draggable-point #bottomLeft [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: 0, y: previewDimensions.height}\" [limitRoles]=\"['bottom', 'left']\" [container]=\"imageContainer\"></ngx-draggable-point>\r\n      <ngx-draggable-point #bottomRight [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: previewDimensions.width, y: previewDimensions.height}\" [limitRoles]=\"['bottom', 'right']\" [container]=\"imageContainer\"></ngx-draggable-point>\r\n    </ng-container>\r\n    <canvas #PreviewCanvas [ngStyle]=\"{'max-width': options.maxPreviewWidth}\" style=\"z-index: 5\" ></canvas>\r\n  </div>\r\n  <div class=\"editor-actions\" fxLayout=\"row\" fxLayoutAlign=\"space-around\" style=\"position: absolute; bottom: 0; width: 100vw\">\r\n    <ng-container *ngFor=\"let button of displayedButtons\" [ngSwitch]=\"button.type\">\r\n      <button mat-mini-fab *ngSwitchCase=\"'fab'\" [name]=\"button.name\" (click)=\"button.action()\" [color]=\"options.buttonThemeColor\">\r\n        <mat-icon>{{button.icon}}</mat-icon>\r\n      </button>\r\n      <button mat-raised-button *ngSwitchCase=\"'button'\" [name]=\"button.name\" (click)=\"button.action()\" [color]=\"options.buttonThemeColor\">\r\n        <mat-icon>{{button.icon}}</mat-icon>\r\n        <span>{{button.text}}}</span>\r\n      </button>\r\n    </ng-container>\r\n  </div>\r\n</div>\r\n\r\n\r\n",
                 styles: [".editor-actions{padding:12px}.editor-actions button{margin:5px}"]
             }] }
 ];
 /** @nocollapse */
 NgxDocScannerComponent.ctorParameters = () => [
-    { type: NgxOpenCvService },
+    { type: NgxOpenCVService },
     { type: LimitsService },
     { type: MatBottomSheet }
 ];
@@ -1495,7 +1501,7 @@ class ImageEditorConfig {
         /**
          * background color of the main editor div
          */
-        this.editorBackgroundColor = 'dimgrey';
+        this.editorBackgroundColor = '#fefefe';
         /**
          * css properties for the main editor div
          */
@@ -1600,7 +1606,7 @@ NgxDocumentScannerModule.decorators = [
                     NgxFilterMenuComponent,
                 ],
                 providers: [
-                    NgxOpenCvService,
+                    NgxOpenCVService,
                     LimitsService,
                 ]
             },] }
@@ -1621,6 +1627,6 @@ NgxDocumentScannerModule.decorators = [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { NgxDocumentScannerModule, NgxDocScannerComponent, OpenCvConfigToken, NgxOpenCvService, NgxDraggablePointComponent as ɵa, NgxFilterMenuComponent as ɵc, NgxShapeOutlineComponent as ɵd, LimitsService as ɵb };
+export { NgxDocumentScannerModule, NgxDocScannerComponent, OpenCvConfigToken, NgxOpenCVService, NgxDraggablePointComponent as ɵa, NgxFilterMenuComponent as ɵc, NgxShapeOutlineComponent as ɵd, LimitsService as ɵb };
 
 //# sourceMappingURL=ngx-document-scanner.js.map

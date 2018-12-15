@@ -10,8 +10,8 @@
      */
     /** @type {?} */
     var OpenCvConfigToken = new i0.InjectionToken('OpenCV config object token');
-    var NgxOpenCvService = /** @class */ (function () {
-        function NgxOpenCvService(options, _ngZone) {
+    var NgxOpenCVService = /** @class */ (function () {
+        function NgxOpenCVService(options, _ngZone) {
             this._ngZone = _ngZone;
             this.cvState = new rxjs.BehaviorSubject({
                 ready: false,
@@ -32,7 +32,7 @@
          * load the OpenCV script
          * @return {?}
          */
-        NgxOpenCvService.prototype.loadOpenCv = /**
+        NgxOpenCVService.prototype.loadOpenCv = /**
          * load the OpenCV script
          * @return {?}
          */
@@ -75,7 +75,7 @@
          * @param {?} change - the new state of the module
          * @return {?}
          */
-        NgxOpenCvService.prototype.newState = /**
+        NgxOpenCVService.prototype.newState = /**
          * generates a new state object
          * @private
          * @param {?} change - the new state of the module
@@ -112,7 +112,7 @@
          * @param {?} options - configuration options
          * @return {?}
          */
-        NgxOpenCvService.prototype.generateConfigModule = /**
+        NgxOpenCVService.prototype.generateConfigModule = /**
          * generates a config module for the global Module object
          * @private
          * @param {?} options - configuration options
@@ -121,7 +121,7 @@
             function (options) {
                 var _this = this;
                 return {
-                    scriptUrl: options.openCvDirPath ? options.openCvDirPath + "/opencv.js" : "/assets/opencv/opencv.js",
+                    scriptUrl: options.openCVDirPath ? options.openCVDirPath + "/opencv.js" : "/assets/opencv/opencv.js",
                     wasmBinaryFile: 'opencv_js.wasm',
                     usingWasm: true,
                     onRuntimeInitialized: function () {
@@ -135,20 +135,20 @@
                     }
                 };
             };
-        NgxOpenCvService.decorators = [
+        NgxOpenCVService.decorators = [
             { type: i0.Injectable, args: [{
                         providedIn: 'root'
                     },] }
         ];
         /** @nocollapse */
-        NgxOpenCvService.ctorParameters = function () {
+        NgxOpenCVService.ctorParameters = function () {
             return [
                 { type: undefined, decorators: [{ type: i0.Inject, args: [OpenCvConfigToken,] }] },
                 { type: i0.NgZone }
             ];
         };
-        /** @nocollapse */ NgxOpenCvService.ngInjectableDef = i0.defineInjectable({ factory: function NgxOpenCvService_Factory() { return new NgxOpenCvService(i0.inject(OpenCvConfigToken), i0.inject(i0.NgZone)); }, token: NgxOpenCvService, providedIn: "root" });
-        return NgxOpenCvService;
+        /** @nocollapse */ NgxOpenCVService.ngInjectableDef = i0.defineInjectable({ factory: function NgxOpenCVService_Factory() { return new NgxOpenCVService(i0.inject(OpenCvConfigToken), i0.inject(i0.NgZone)); }, token: NgxOpenCVService, providedIn: "root" });
+        return NgxOpenCVService;
     }());
 
     /*! *****************************************************************************
@@ -843,7 +843,7 @@
         NgxDraggablePointComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ngx-draggable-point',
-                        template: "<div #point ngDraggable=\"draggable\"\n     (movingOffset)=\"positionChange($event)\"\n     [ngStyle]=\"pointStyle()\"\n     [position]=\"position\"\n     [bounds]=\"container\"\n     [inBounds]=\"true\"\n     (endOffset)=\"movementEnd($event)\"\n      style=\"z-index: 1000\">\n</div>\n"
+                        template: "<div #point ngDraggable=\"draggable\"\r\n     (movingOffset)=\"positionChange($event)\"\r\n     [ngStyle]=\"pointStyle()\"\r\n     [position]=\"position\"\r\n     [bounds]=\"container\"\r\n     [inBounds]=\"true\"\r\n     (endOffset)=\"movementEnd($event)\"\r\n      style=\"z-index: 1000\">\r\n</div>\r\n"
                     }] }
         ];
         /** @nocollapse */
@@ -1091,7 +1091,7 @@
         NgxShapeOutlineComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ngx-shape-outine',
-                        template: "<canvas #outline\n        style=\"position: fixed; z-index: 1000\"\n        [ngStyle]=\"{width: dimensions.width + 'px', height: dimensions.height + 'px'}\"\n        *ngIf=\"dimensions\">\n</canvas>\n"
+                        template: "<canvas #outline\r\n        style=\"position: absolute; z-index: 1000\"\r\n        [ngStyle]=\"{width: dimensions.width + 'px', height: dimensions.height + 'px'}\"\r\n        *ngIf=\"dimensions\">\r\n</canvas>\r\n"
                     }] }
         ];
         /** @nocollapse */
@@ -1616,36 +1616,37 @@
                 var _this = this;
                 return new Promise(function (resolve, reject) {
                     _this.processing.emit(true);
-                    /** @type {?} */
-                    var src = cv.imread(_this.editedImage);
-                    /** @type {?} */
-                    var dst = new cv.Mat();
-                    cv.transpose(src, dst);
-                    cv.flip(dst, dst, 1);
-                    cv.imshow(_this.editedImage, dst);
-                    src.delete();
-                    dst.delete();
-                    // save current preview dimensions and positions
-                    /** @type {?} */
-                    var initialPreviewDimensions = { width: 0, height: 0 };
-                    Object.assign(initialPreviewDimensions, _this.previewDimensions);
-                    /** @type {?} */
-                    var initialPositions = Array.from(_this.points);
-                    // get new dimensions
-                    // set new preview pane dimensions
-                    _this.setPreviewPaneDimensions(_this.editedImage);
-                    // get preview pane resize ratio
-                    /** @type {?} */
-                    var previewResizeRatios = {
-                        width: _this.previewDimensions.width / initialPreviewDimensions.width,
-                        height: _this.previewDimensions.height / initialPreviewDimensions.height
-                    };
-                    // set new preview pane dimensions
-                    _this.limitsService.rotateClockwise(previewResizeRatios, initialPreviewDimensions, initialPositions);
-                    _this.showPreview().then(function () {
-                        _this.processing.emit(false);
-                        resolve();
-                    });
+                    setTimeout(function () {
+                        /** @type {?} */
+                        var dst = cv.imread(_this.editedImage);
+                        // const dst = new cv.Mat();
+                        cv.transpose(dst, dst);
+                        cv.flip(dst, dst, 1);
+                        cv.imshow(_this.editedImage, dst);
+                        // src.delete();
+                        dst.delete();
+                        // save current preview dimensions and positions
+                        /** @type {?} */
+                        var initialPreviewDimensions = { width: 0, height: 0 };
+                        Object.assign(initialPreviewDimensions, _this.previewDimensions);
+                        /** @type {?} */
+                        var initialPositions = Array.from(_this.points);
+                        // get new dimensions
+                        // set new preview pane dimensions
+                        _this.setPreviewPaneDimensions(_this.editedImage);
+                        // get preview pane resize ratio
+                        /** @type {?} */
+                        var previewResizeRatios = {
+                            width: _this.previewDimensions.width / initialPreviewDimensions.width,
+                            height: _this.previewDimensions.height / initialPreviewDimensions.height
+                        };
+                        // set new preview pane dimensions
+                        _this.limitsService.rotateClockwise(previewResizeRatios, initialPreviewDimensions, initialPositions);
+                        _this.showPreview().then(function () {
+                            _this.processing.emit(false);
+                            resolve();
+                        });
+                    }, 30);
                 });
             };
         /**
@@ -1666,46 +1667,48 @@
             function () {
                 var _this = this;
                 return new Promise(function (resolve, reject) {
-                    // this.processing.emit(true);
-                    // load the image and compute the ratio of the old height to the new height, clone it, and resize it
-                    /** @type {?} */
-                    var processingResizeRatio = 0.5;
-                    /** @type {?} */
-                    var dst = cv.imread(_this.editedImage);
-                    /** @type {?} */
-                    var dsize = new cv.Size(dst.rows * processingResizeRatio, dst.cols * processingResizeRatio);
-                    /** @type {?} */
-                    var ksize = new cv.Size(5, 5);
-                    // convert the image to grayscale, blur it, and find edges in the image
-                    cv.cvtColor(dst, dst, cv.COLOR_RGBA2GRAY, 0);
-                    cv.GaussianBlur(dst, dst, ksize, 0, 0, cv.BORDER_DEFAULT);
-                    cv.Canny(dst, dst, 75, 200);
-                    // find contours
-                    cv.threshold(dst, dst, 120, 200, cv.THRESH_BINARY);
-                    /** @type {?} */
-                    var contours = new cv.MatVector();
-                    /** @type {?} */
-                    var hierarchy = new cv.Mat();
-                    cv.findContours(dst, contours, hierarchy, cv.RETR_CCOMP, cv.CHAIN_APPROX_SIMPLE);
-                    /** @type {?} */
-                    var rect = cv.boundingRect(dst);
-                    dst.delete();
-                    hierarchy.delete();
-                    contours.delete();
-                    // transform the rectangle into a set of points
-                    Object.keys(rect).forEach(function (key) {
-                        rect[key] = rect[key] * _this.imageResizeRatio;
-                    });
-                    /** @type {?} */
-                    var contourCoordinates = [
-                        new PositionChangeData({ x: rect.x, y: rect.y }, ['left', 'top']),
-                        new PositionChangeData({ x: rect.x + rect.width, y: rect.y }, ['right', 'top']),
-                        new PositionChangeData({ x: rect.x + rect.width, y: rect.y + rect.height }, ['right', 'bottom']),
-                        new PositionChangeData({ x: rect.x, y: rect.y + rect.height }, ['left', 'bottom']),
-                    ];
-                    _this.limitsService.repositionPoints(contourCoordinates);
-                    // this.processing.emit(false);
-                    resolve();
+                    _this.processing.emit(true);
+                    setTimeout(function () {
+                        // load the image and compute the ratio of the old height to the new height, clone it, and resize it
+                        /** @type {?} */
+                        var processingResizeRatio = 0.5;
+                        /** @type {?} */
+                        var dst = cv.imread(_this.editedImage);
+                        /** @type {?} */
+                        var dsize = new cv.Size(dst.rows * processingResizeRatio, dst.cols * processingResizeRatio);
+                        /** @type {?} */
+                        var ksize = new cv.Size(5, 5);
+                        // convert the image to grayscale, blur it, and find edges in the image
+                        cv.cvtColor(dst, dst, cv.COLOR_RGBA2GRAY, 0);
+                        cv.GaussianBlur(dst, dst, ksize, 0, 0, cv.BORDER_DEFAULT);
+                        cv.Canny(dst, dst, 75, 200);
+                        // find contours
+                        cv.threshold(dst, dst, 120, 200, cv.THRESH_BINARY);
+                        /** @type {?} */
+                        var contours = new cv.MatVector();
+                        /** @type {?} */
+                        var hierarchy = new cv.Mat();
+                        cv.findContours(dst, contours, hierarchy, cv.RETR_CCOMP, cv.CHAIN_APPROX_SIMPLE);
+                        /** @type {?} */
+                        var rect = cv.boundingRect(dst);
+                        dst.delete();
+                        hierarchy.delete();
+                        contours.delete();
+                        // transform the rectangle into a set of points
+                        Object.keys(rect).forEach(function (key) {
+                            rect[key] = rect[key] * _this.imageResizeRatio;
+                        });
+                        /** @type {?} */
+                        var contourCoordinates = [
+                            new PositionChangeData({ x: rect.x, y: rect.y }, ['left', 'top']),
+                            new PositionChangeData({ x: rect.x + rect.width, y: rect.y }, ['right', 'top']),
+                            new PositionChangeData({ x: rect.x + rect.width, y: rect.y + rect.height }, ['right', 'bottom']),
+                            new PositionChangeData({ x: rect.x, y: rect.y + rect.height }, ['left', 'bottom']),
+                        ];
+                        _this.limitsService.repositionPoints(contourCoordinates);
+                        // this.processing.emit(false);
+                        resolve();
+                    }, 30);
                 });
             };
         /**
@@ -1725,65 +1728,64 @@
                 var _this = this;
                 return new Promise(function (resolve, reject) {
                     _this.processing.emit(true);
-                    /** @type {?} */
-                    var src = cv.imread(_this.editedImage);
-                    /** @type {?} */
-                    var dst = new cv.Mat();
-                    // create source coordinates matrix
-                    /** @type {?} */
-                    var sourceCoordinates = [
-                        _this.getPoint(['top', 'left']),
-                        _this.getPoint(['top', 'right']),
-                        _this.getPoint(['bottom', 'right']),
-                        _this.getPoint(['bottom', 'left'])
-                    ].map(function (point) {
-                        return [point.x / _this.imageResizeRatio, point.y / _this.imageResizeRatio];
-                    });
-                    // get max width
-                    /** @type {?} */
-                    var bottomWidth = _this.getPoint(['bottom', 'right']).x - _this.getPoint(['bottom', 'left']).x;
-                    /** @type {?} */
-                    var topWidth = _this.getPoint(['top', 'right']).x - _this.getPoint(['top', 'left']).x;
-                    /** @type {?} */
-                    var maxWidth = Math.max(bottomWidth, topWidth) / _this.imageResizeRatio;
-                    // get max height
-                    /** @type {?} */
-                    var leftHeight = _this.getPoint(['bottom', 'left']).y - _this.getPoint(['top', 'left']).y;
-                    /** @type {?} */
-                    var rightHeight = _this.getPoint(['bottom', 'right']).y - _this.getPoint(['top', 'right']).y;
-                    /** @type {?} */
-                    var maxHeight = Math.max(leftHeight, rightHeight) / _this.imageResizeRatio;
-                    // create dest coordinates matrix
-                    /** @type {?} */
-                    var destCoordinates = [
-                        [0, 0],
-                        [maxWidth - 1, 0],
-                        [maxWidth - 1, maxHeight - 1],
-                        [0, maxHeight - 1]
-                    ];
-                    // convert to open cv matrix objects
-                    /** @type {?} */
-                    var Ms = cv.matFromArray(4, 1, cv.CV_32FC2, [].concat.apply([], __spread(sourceCoordinates)));
-                    /** @type {?} */
-                    var Md = cv.matFromArray(4, 1, cv.CV_32FC2, [].concat.apply([], __spread(destCoordinates)));
-                    /** @type {?} */
-                    var transformMatrix = cv.getPerspectiveTransform(Ms, Md);
-                    // set new image size
-                    /** @type {?} */
-                    var dsize = new cv.Size(maxWidth, maxHeight);
-                    // perform warp
-                    cv.warpPerspective(src, dst, transformMatrix, dsize, cv.INTER_LINEAR, cv.BORDER_CONSTANT, new cv.Scalar());
-                    cv.imshow(_this.editedImage, dst);
-                    src.delete();
-                    dst.delete();
-                    Ms.delete();
-                    Md.delete();
-                    transformMatrix.delete();
-                    _this.setPreviewPaneDimensions(_this.editedImage);
-                    _this.showPreview().then(function () {
-                        _this.processing.emit(false);
-                        resolve();
-                    });
+                    setTimeout(function () {
+                        /** @type {?} */
+                        var dst = cv.imread(_this.editedImage);
+                        // create source coordinates matrix
+                        /** @type {?} */
+                        var sourceCoordinates = [
+                            _this.getPoint(['top', 'left']),
+                            _this.getPoint(['top', 'right']),
+                            _this.getPoint(['bottom', 'right']),
+                            _this.getPoint(['bottom', 'left'])
+                        ].map(function (point) {
+                            return [point.x / _this.imageResizeRatio, point.y / _this.imageResizeRatio];
+                        });
+                        // get max width
+                        /** @type {?} */
+                        var bottomWidth = _this.getPoint(['bottom', 'right']).x - _this.getPoint(['bottom', 'left']).x;
+                        /** @type {?} */
+                        var topWidth = _this.getPoint(['top', 'right']).x - _this.getPoint(['top', 'left']).x;
+                        /** @type {?} */
+                        var maxWidth = Math.max(bottomWidth, topWidth) / _this.imageResizeRatio;
+                        // get max height
+                        /** @type {?} */
+                        var leftHeight = _this.getPoint(['bottom', 'left']).y - _this.getPoint(['top', 'left']).y;
+                        /** @type {?} */
+                        var rightHeight = _this.getPoint(['bottom', 'right']).y - _this.getPoint(['top', 'right']).y;
+                        /** @type {?} */
+                        var maxHeight = Math.max(leftHeight, rightHeight) / _this.imageResizeRatio;
+                        // create dest coordinates matrix
+                        /** @type {?} */
+                        var destCoordinates = [
+                            [0, 0],
+                            [maxWidth - 1, 0],
+                            [maxWidth - 1, maxHeight - 1],
+                            [0, maxHeight - 1]
+                        ];
+                        // convert to open cv matrix objects
+                        /** @type {?} */
+                        var Ms = cv.matFromArray(4, 1, cv.CV_32FC2, [].concat.apply([], __spread(sourceCoordinates)));
+                        /** @type {?} */
+                        var Md = cv.matFromArray(4, 1, cv.CV_32FC2, [].concat.apply([], __spread(destCoordinates)));
+                        /** @type {?} */
+                        var transformMatrix = cv.getPerspectiveTransform(Ms, Md);
+                        // set new image size
+                        /** @type {?} */
+                        var dsize = new cv.Size(maxWidth, maxHeight);
+                        // perform warp
+                        cv.warpPerspective(dst, dst, transformMatrix, dsize, cv.INTER_LINEAR, cv.BORDER_CONSTANT, new cv.Scalar());
+                        cv.imshow(_this.editedImage, dst);
+                        dst.delete();
+                        Ms.delete();
+                        Md.delete();
+                        transformMatrix.delete();
+                        _this.setPreviewPaneDimensions(_this.editedImage);
+                        _this.showPreview().then(function () {
+                            _this.processing.emit(false);
+                            resolve();
+                        });
+                    }, 30);
                 });
             };
         /**
@@ -1809,67 +1811,76 @@
                 var _this = this;
                 return new Promise(function (resolve, reject) {
                     return __awaiter(_this, void 0, void 0, function () {
-                        var options, dst, ksize;
+                        var options, dst;
+                        var _this = this;
                         return __generator(this, function (_a) {
-                            switch (_a.label) {
-                                case 0:
-                                    this.processing.emit(true);
-                                    // default options
-                                    options = {
-                                        blur: false,
-                                        th: true,
-                                        thMode: cv.ADAPTIVE_THRESH_MEAN_C,
-                                        thMeanCorrection: 10,
-                                        thBlockSize: 25,
-                                        thMax: 255,
-                                        grayScale: true,
-                                    };
-                                    dst = cv.imread(this.editedImage);
-                                    switch (this.selectedFilter) {
-                                        case 'original':
-                                            options.th = false;
-                                            options.grayScale = false;
-                                            options.blur = false;
-                                            break;
-                                        case 'magic_color':
-                                            options.grayScale = false;
-                                            break;
-                                        case 'bw2':
-                                            options.thMode = cv.ADAPTIVE_THRESH_GAUSSIAN_C;
-                                            options.thMeanCorrection = 15;
-                                            options.thBlockSize = 15;
-                                            break;
-                                        case 'bw3':
-                                            options.blur = true;
-                                            options.thMeanCorrection = 15;
-                                            break;
-                                    }
-                                    if (options.grayScale) {
-                                        cv.cvtColor(dst, dst, cv.COLOR_RGBA2GRAY, 0);
-                                    }
-                                    if (options.blur) {
-                                        ksize = new cv.Size(5, 5);
-                                        cv.GaussianBlur(dst, dst, ksize, 0, 0, cv.BORDER_DEFAULT);
-                                    }
-                                    if (options.th) {
-                                        if (options.grayScale) {
-                                            cv.adaptiveThreshold(dst, dst, options.thMax, options.thMode, cv.THRESH_BINARY, options.thBlockSize, options.thMeanCorrection);
-                                        }
-                                        else {
-                                            dst.convertTo(dst, -1, 1, 60);
-                                            cv.threshold(dst, dst, 170, 255, cv.THRESH_BINARY);
-                                        }
-                                    }
-                                    if (!preview) {
-                                        cv.imshow(this.editedImage, dst);
-                                    }
-                                    return [4 /*yield*/, this.showPreview(dst)];
-                                case 1:
-                                    _a.sent();
-                                    this.processing.emit(false);
-                                    resolve();
-                                    return [2 /*return*/];
+                            this.processing.emit(true);
+                            // default options
+                            options = {
+                                blur: false,
+                                th: true,
+                                thMode: cv.ADAPTIVE_THRESH_MEAN_C,
+                                thMeanCorrection: 10,
+                                thBlockSize: 25,
+                                thMax: 255,
+                                grayScale: true,
+                            };
+                            dst = cv.imread(this.editedImage);
+                            switch (this.selectedFilter) {
+                                case 'original':
+                                    options.th = false;
+                                    options.grayScale = false;
+                                    options.blur = false;
+                                    break;
+                                case 'magic_color':
+                                    options.grayScale = false;
+                                    break;
+                                case 'bw2':
+                                    options.thMode = cv.ADAPTIVE_THRESH_GAUSSIAN_C;
+                                    options.thMeanCorrection = 15;
+                                    options.thBlockSize = 15;
+                                    break;
+                                case 'bw3':
+                                    options.blur = true;
+                                    options.thMeanCorrection = 15;
+                                    break;
                             }
+                            setTimeout(function () {
+                                return __awaiter(_this, void 0, void 0, function () {
+                                    var ksize;
+                                    return __generator(this, function (_a) {
+                                        switch (_a.label) {
+                                            case 0:
+                                                if (options.grayScale) {
+                                                    cv.cvtColor(dst, dst, cv.COLOR_RGBA2GRAY, 0);
+                                                }
+                                                if (options.blur) {
+                                                    ksize = new cv.Size(5, 5);
+                                                    cv.GaussianBlur(dst, dst, ksize, 0, 0, cv.BORDER_DEFAULT);
+                                                }
+                                                if (options.th) {
+                                                    if (options.grayScale) {
+                                                        cv.adaptiveThreshold(dst, dst, options.thMax, options.thMode, cv.THRESH_BINARY, options.thBlockSize, options.thMeanCorrection);
+                                                    }
+                                                    else {
+                                                        dst.convertTo(dst, -1, 1, 60);
+                                                        cv.threshold(dst, dst, 170, 255, cv.THRESH_BINARY);
+                                                    }
+                                                }
+                                                if (!preview) {
+                                                    cv.imshow(this.editedImage, dst);
+                                                }
+                                                return [4 /*yield*/, this.showPreview(dst)];
+                                            case 1:
+                                                _a.sent();
+                                                this.processing.emit(false);
+                                                resolve();
+                                                return [2 /*return*/];
+                                        }
+                                    });
+                                });
+                            }, 30);
+                            return [2 /*return*/];
                         });
                     });
                 });
@@ -1893,43 +1904,45 @@
                 var _this = this;
                 return new Promise(function (resolve, reject) {
                     _this.processing.emit(true);
-                    /** @type {?} */
-                    var src = cv.imread(_this.editedImage);
-                    /** @type {?} */
-                    var currentDimensions = {
-                        width: src.size().width,
-                        height: src.size().height
-                    };
-                    /** @type {?} */
-                    var resizeDimensions = {
-                        width: 0,
-                        height: 0
-                    };
-                    if (currentDimensions.width > _this.options.maxImageDimensions.width) {
-                        resizeDimensions.width = _this.options.maxImageDimensions.width;
-                        resizeDimensions.height = _this.options.maxImageDimensions.width / currentDimensions.width * currentDimensions.height;
-                        if (resizeDimensions.height > _this.options.maxImageDimensions.height) {
-                            resizeDimensions.height = _this.options.maxImageDimensions.height;
-                            resizeDimensions.width = _this.options.maxImageDimensions.height / currentDimensions.height * currentDimensions.width;
-                        }
+                    setTimeout(function () {
                         /** @type {?} */
-                        var dsize = new cv.Size(Math.floor(resizeDimensions.width), Math.floor(resizeDimensions.height));
-                        cv.resize(src, src, dsize, 0, 0, cv.INTER_AREA);
+                        var src = cv.imread(_this.editedImage);
                         /** @type {?} */
-                        var resizeResult = ( /** @type {?} */(document.createElement('canvas')));
-                        cv.imshow(resizeResult, src);
-                        src.delete();
-                        _this.processing.emit(false);
-                        resolve(resizeResult);
-                    }
-                    else {
-                        if (image) {
-                            resolve(image);
+                        var currentDimensions = {
+                            width: src.size().width,
+                            height: src.size().height
+                        };
+                        /** @type {?} */
+                        var resizeDimensions = {
+                            width: 0,
+                            height: 0
+                        };
+                        if (currentDimensions.width > _this.options.maxImageDimensions.width) {
+                            resizeDimensions.width = _this.options.maxImageDimensions.width;
+                            resizeDimensions.height = _this.options.maxImageDimensions.width / currentDimensions.width * currentDimensions.height;
+                            if (resizeDimensions.height > _this.options.maxImageDimensions.height) {
+                                resizeDimensions.height = _this.options.maxImageDimensions.height;
+                                resizeDimensions.width = _this.options.maxImageDimensions.height / currentDimensions.height * currentDimensions.width;
+                            }
+                            /** @type {?} */
+                            var dsize = new cv.Size(Math.floor(resizeDimensions.width), Math.floor(resizeDimensions.height));
+                            cv.resize(src, src, dsize, 0, 0, cv.INTER_AREA);
+                            /** @type {?} */
+                            var resizeResult = ( /** @type {?} */(document.createElement('canvas')));
+                            cv.imshow(resizeResult, src);
+                            src.delete();
+                            _this.processing.emit(false);
+                            resolve(resizeResult);
                         }
                         else {
-                            resolve(_this.editedImage);
+                            if (image) {
+                                resolve(image);
+                            }
+                            else {
+                                resolve(_this.editedImage);
+                            }
                         }
-                    }
+                    }, 30);
                 });
             };
         /**
@@ -2030,9 +2043,9 @@
                 var ratio = width / height;
                 /** @type {?} */
                 var maxWidth = this.screenDimensions.width > this.maxPreviewWidth ?
-                    this.maxPreviewWidth : this.screenDimensions.width - 20;
+                    this.maxPreviewWidth : this.screenDimensions.width - 40;
                 /** @type {?} */
-                var maxHeight = this.screenDimensions.height - 200;
+                var maxHeight = this.screenDimensions.height - 240;
                 /** @type {?} */
                 var calculated = {
                     width: maxWidth,
@@ -2070,14 +2083,14 @@
         NgxDocScannerComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'ngx-doc-scanner',
-                        template: "<div [ngStyle]=\"editorStyle\" fxLayoutAlign=\"space-around\">\n  <div #imageContainer [ngStyle]=\"imageDivStyle\" style=\"margin: auto;\" >\n    <ng-container *ngIf=\"imageLoaded && mode === 'crop'\">\n      <ngx-shape-outine #shapeOutline [color]=\"options.cropToolColor\" [weight]=\"options.cropToolLineWeight\" [dimensions]=\"previewDimensions\"></ngx-shape-outine>\n      <ngx-draggable-point #topLeft [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: 0, y: 0}\" [limitRoles]=\"['top', 'left']\" [container]=\"imageContainer\"></ngx-draggable-point>\n      <ngx-draggable-point #topRight [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: previewDimensions.width, y: 0}\" [limitRoles]=\"['top', 'right']\" [container]=\"imageContainer\"></ngx-draggable-point>\n      <ngx-draggable-point #bottomLeft [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: 0, y: previewDimensions.height}\" [limitRoles]=\"['bottom', 'left']\" [container]=\"imageContainer\"></ngx-draggable-point>\n      <ngx-draggable-point #bottomRight [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: previewDimensions.width, y: previewDimensions.height}\" [limitRoles]=\"['bottom', 'right']\" [container]=\"imageContainer\"></ngx-draggable-point>\n    </ng-container>\n    <canvas #PreviewCanvas [ngStyle]=\"{'max-width': options.maxPreviewWidth}\" style=\"z-index: 5\" ></canvas>\n  </div>\n  <div class=\"editor-actions\" fxLayout=\"row\" fxLayoutAlign=\"space-around\" style=\"position: absolute; bottom: 0; width: 100vw\">\n    <ng-container *ngFor=\"let button of displayedButtons\" [ngSwitch]=\"button.type\">\n      <button mat-mini-fab *ngSwitchCase=\"'fab'\" [name]=\"button.name\" (click)=\"button.action()\" [color]=\"options.buttonThemeColor\">\n        <mat-icon>{{button.icon}}</mat-icon>\n      </button>\n      <button mat-raised-button *ngSwitchCase=\"'button'\" [name]=\"button.name\" (click)=\"button.action()\" [color]=\"options.buttonThemeColor\">\n        <mat-icon>{{button.icon}}</mat-icon>\n        <span>{{button.text}}}</span>\n      </button>\n    </ng-container>\n  </div>\n</div>\n\n\n",
+                        template: "<div [ngStyle]=\"editorStyle\" fxLayoutAlign=\"space-around\">\r\n  <div #imageContainer [ngStyle]=\"imageDivStyle\" style=\"margin: auto;\" >\r\n    <ng-container *ngIf=\"imageLoaded && mode === 'crop'\">\r\n      <ngx-shape-outine #shapeOutline [color]=\"options.cropToolColor\" [weight]=\"options.cropToolLineWeight\" [dimensions]=\"previewDimensions\"></ngx-shape-outine>\r\n      <ngx-draggable-point #topLeft [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: 0, y: 0}\" [limitRoles]=\"['top', 'left']\" [container]=\"imageContainer\"></ngx-draggable-point>\r\n      <ngx-draggable-point #topRight [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: previewDimensions.width, y: 0}\" [limitRoles]=\"['top', 'right']\" [container]=\"imageContainer\"></ngx-draggable-point>\r\n      <ngx-draggable-point #bottomLeft [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: 0, y: previewDimensions.height}\" [limitRoles]=\"['bottom', 'left']\" [container]=\"imageContainer\"></ngx-draggable-point>\r\n      <ngx-draggable-point #bottomRight [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: previewDimensions.width, y: previewDimensions.height}\" [limitRoles]=\"['bottom', 'right']\" [container]=\"imageContainer\"></ngx-draggable-point>\r\n    </ng-container>\r\n    <canvas #PreviewCanvas [ngStyle]=\"{'max-width': options.maxPreviewWidth}\" style=\"z-index: 5\" ></canvas>\r\n  </div>\r\n  <div class=\"editor-actions\" fxLayout=\"row\" fxLayoutAlign=\"space-around\" style=\"position: absolute; bottom: 0; width: 100vw\">\r\n    <ng-container *ngFor=\"let button of displayedButtons\" [ngSwitch]=\"button.type\">\r\n      <button mat-mini-fab *ngSwitchCase=\"'fab'\" [name]=\"button.name\" (click)=\"button.action()\" [color]=\"options.buttonThemeColor\">\r\n        <mat-icon>{{button.icon}}</mat-icon>\r\n      </button>\r\n      <button mat-raised-button *ngSwitchCase=\"'button'\" [name]=\"button.name\" (click)=\"button.action()\" [color]=\"options.buttonThemeColor\">\r\n        <mat-icon>{{button.icon}}</mat-icon>\r\n        <span>{{button.text}}}</span>\r\n      </button>\r\n    </ng-container>\r\n  </div>\r\n</div>\r\n\r\n\r\n",
                         styles: [".editor-actions{padding:12px}.editor-actions button{margin:5px}"]
                     }] }
         ];
         /** @nocollapse */
         NgxDocScannerComponent.ctorParameters = function () {
             return [
-                { type: NgxOpenCvService },
+                { type: NgxOpenCVService },
                 { type: LimitsService },
                 { type: material.MatBottomSheet }
             ];
@@ -2112,7 +2125,7 @@
             /**
              * background color of the main editor div
              */
-            this.editorBackgroundColor = 'dimgrey';
+            this.editorBackgroundColor = '#fefefe';
             /**
              * css properties for the main editor div
              */
@@ -2223,7 +2236,7 @@
                             NgxFilterMenuComponent,
                         ],
                         providers: [
-                            NgxOpenCvService,
+                            NgxOpenCVService,
                             LimitsService,
                         ]
                     },] }
@@ -2244,7 +2257,7 @@
     exports.NgxDocumentScannerModule = NgxDocumentScannerModule;
     exports.NgxDocScannerComponent = NgxDocScannerComponent;
     exports.OpenCvConfigToken = OpenCvConfigToken;
-    exports.NgxOpenCvService = NgxOpenCvService;
+    exports.NgxOpenCVService = NgxOpenCVService;
     exports.ɵa = NgxDraggablePointComponent;
     exports.ɵc = NgxFilterMenuComponent;
     exports.ɵd = NgxShapeOutlineComponent;

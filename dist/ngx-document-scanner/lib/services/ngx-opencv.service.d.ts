@@ -1,12 +1,12 @@
 import { InjectionToken, NgZone } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { OpenCvConfig, OpenCvState } from '../PublicModels';
-export declare const OpenCvConfigToken: InjectionToken<OpenCvConfig>;
-export declare class NgxOpenCvService {
+import { OpenCVConfig, OpenCVState } from '../PublicModels';
+export declare const OpenCvConfigToken: InjectionToken<OpenCVConfig>;
+export declare class NgxOpenCVService {
     private _ngZone;
-    cvState: BehaviorSubject<OpenCvState>;
-    configModule: OpenCvConfigModule;
-    constructor(options: OpenCvConfig, _ngZone: NgZone);
+    cvState: BehaviorSubject<OpenCVState>;
+    configModule: OpenCVConfigModule;
+    constructor(options: OpenCVConfig, _ngZone: NgZone);
     /**
      * load the OpenCV script
      */
@@ -25,7 +25,7 @@ export declare class NgxOpenCvService {
 /**
  * describes the global Module object that is used to initiate OpenCV.js
  */
-interface OpenCvConfigModule {
+interface OpenCVConfigModule {
     scriptUrl: string;
     wasmBinaryFile: string;
     usingWasm: boolean;

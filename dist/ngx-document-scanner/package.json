@@ -7,7 +7,10 @@
     "scanner",
     "image processing",
     "document",
-    "angular"
+    "angular",
+    "OpenCVJS",
+    "image manipulation",
+    "crop"
   ],
   "description": "Angular 2+ component for cropping and enhancing images of documents",
   "author": "RoiP",

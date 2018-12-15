@@ -1,5 +1,5 @@
 import { ModuleWithProviders } from '@angular/core';
-import { OpenCvConfig } from './PublicModels';
+import { OpenCVConfig } from './PublicModels';
 export declare class NgxDocumentScannerModule {
-    static forRoot(config: OpenCvConfig): ModuleWithProviders;
+    static forRoot(config: OpenCVConfig): ModuleWithProviders;
 }

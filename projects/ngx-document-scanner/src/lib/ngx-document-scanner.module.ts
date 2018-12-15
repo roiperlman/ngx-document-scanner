@@ -1,5 +1,5 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
-import {NgxOpenCvService, OpenCvConfigToken} from './services/ngx-open-cv.service';
+import {NgxOpenCVService, OpenCvConfigToken} from './services/ngx-opencv.service';
 import {NgxDraggablePointComponent} from './components/draggable-point/ngx-draggable-point.component';
 import {NgxFilterMenuComponent} from './components/filter-menu/ngx-filter-menu.component';
 import {NgxShapeOutlineComponent} from './components/shape-outline/ngx-shape-outline.component';
@@ -9,7 +9,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatBottomSheetModule, MatButtonModule, MatIconModule, MatListModule} from '@angular/material';
 import {AngularDraggableModule} from 'angular2-draggable';
 import {CommonModule} from '@angular/common';
-import {OpenCvConfig} from './PublicModels';
+import {OpenCVConfig} from './PublicModels';
 
 @NgModule({
   declarations: [
@@ -34,12 +34,12 @@ import {OpenCvConfig} from './PublicModels';
     NgxFilterMenuComponent,
   ],
   providers: [
-    NgxOpenCvService,
+    NgxOpenCVService,
     LimitsService,
   ]
 })
 export class NgxDocumentScannerModule {
-  static forRoot(config: OpenCvConfig): ModuleWithProviders {
+  static forRoot(config: OpenCVConfig): ModuleWithProviders {
     return {
       ngModule: NgxDocumentScannerModule,
       providers: [{ provide: OpenCvConfigToken, useValue: config }]
