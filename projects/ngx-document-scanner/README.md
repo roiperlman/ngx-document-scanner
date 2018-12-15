@@ -13,7 +13,7 @@ install the package via npm
     npm install ngx-document-scanner --save
 
 copy the opencv.js files to your assets folder (or any other folder). you can build the files yourself ([instructions on the OpenCV site](https://docs.opencv.org/3.4/d4/da1/tutorial_js_setup.html)), or download them from this package's [repository](https://github.com/roiperlman/ngx-document-scanner).
-both opencv.js & opencv_js.wasm need to places in the same folder.
+both opencv.js & opencv_js.wasm need to placed in the same folder.
 
 import the package to your `app.module`. you'll need to configure the location of the open cv files.
 	
@@ -21,12 +21,12 @@ import the package to your `app.module`. you'll need to configure the location o
     import {NgxDocumentScannerModule} from 'ngx-document-scanner';
     
     // set the location of the OpenCV files
-    const OpenCVConfig: OpenCVConfig = {
+    const openCVConfig: OpenCVConfig = {
 	  openCvDirPath: '/assets/opencv'  
 	};
 	
     @NgModule({ imports: 
-      [NgxDocumentScannerModule.forRoot(OpenCVConfig)],
+      [NgxDocumentScannerModule.forRoot(openCVConfig)],
       bootstrap: [AppComponent]  
     })
     export class AppModule { }
