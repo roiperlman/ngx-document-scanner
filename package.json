@@ -1,6 +1,6 @@
 {
   "name": "ngx-document-scanner",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "build_lib_doc_scanner": "ng build ngx-document-scanner",
