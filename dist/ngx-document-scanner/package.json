@@ -1,0 +1,46 @@
+{
+  "name": "ngx-document-scanner",
+  "version": "1.0.4",
+  "keywords": [
+    "opencv",
+    "camscanner",
+    "scanner",
+    "image processing",
+    "document",
+    "angular",
+    "OpenCVJS",
+    "image manipulation",
+    "crop"
+  ],
+  "description": "Angular 2+ component for cropping and enhancing images of documents",
+  "author": "RoiP",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/roiperlman/ngx-document-scanner.git"
+  },
+  "peerDependencies": {
+    "angular2-draggable": "^2.1.7",
+    "@angular/flex-layout": "^7.0.0-beta.19",
+    "@angular/material": "^7.0.3",
+    "@angular/common": "^7.0.0",
+    "@angular/core": "^7.0.0",
+    "@angular/cdk": "~7.0.3",
+    "@angular/platform-browser": "~7.0.0",
+    "@angular/platform-browser-dynamic": "~7.0.0",
+    "rxjs": "~6.3.3"
+  },
+  "main": "bundles/ngx-document-scanner.umd.js",
+  "module": "fesm5/ngx-document-scanner.js",
+  "es2015": "fesm2015/ngx-document-scanner.js",
+  "esm5": "esm5/ngx-document-scanner.js",
+  "esm2015": "esm2015/ngx-document-scanner.js",
+  "fesm5": "fesm5/ngx-document-scanner.js",
+  "fesm2015": "fesm2015/ngx-document-scanner.js",
+  "typings": "ngx-document-scanner.d.ts",
+  "metadata": "ngx-document-scanner.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}
