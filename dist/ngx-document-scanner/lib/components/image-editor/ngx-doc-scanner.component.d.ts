@@ -2,9 +2,9 @@ import { EventEmitter, OnInit } from '@angular/core';
 import { LimitsService } from '../../services/limits.service';
 import { MatBottomSheet } from '@angular/material';
 import { PointShape } from '../../PrivateModels';
-import { NgxOpenCVService } from '../../services/ngx-opencv.service';
 import { ImageDimensions, DocScannerConfig } from '../../PublicModels';
 import { EditorActionButton, PointOptions } from '../../PrivateModels';
+import { NgxOpenCVService } from 'ngx-opencv';
 export declare class NgxDocScannerComponent implements OnInit {
     private ngxOpenCv;
     private limitsService;

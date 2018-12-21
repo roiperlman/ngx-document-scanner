@@ -3,5 +3,6 @@
   "dest": "../../dist/ngx-document-scanner",
   "lib": {
     "entryFile": "src/public_api.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": ["."]
 }

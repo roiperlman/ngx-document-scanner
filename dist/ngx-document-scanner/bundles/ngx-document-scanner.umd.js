@@ -1,155 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('rxjs'), require('@angular/core'), require('@angular/flex-layout'), require('@angular/material'), require('angular2-draggable'), require('@angular/common')) :
-    typeof define === 'function' && define.amd ? define('ngx-document-scanner', ['exports', 'rxjs', '@angular/core', '@angular/flex-layout', '@angular/material', 'angular2-draggable', '@angular/common'], factory) :
-    (factory((global['ngx-document-scanner'] = {}),global.rxjs,global.ng.core,global.ng['flex-layout'],global.ng.material,global.angular2Draggable,global.ng.common));
-}(this, (function (exports,rxjs,i0,flexLayout,material,angular2Draggable,common) { 'use strict';
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
-    var OpenCvConfigToken = new i0.InjectionToken('OpenCV config object token');
-    var NgxOpenCVService = /** @class */ (function () {
-        function NgxOpenCVService(options, _ngZone) {
-            this._ngZone = _ngZone;
-            this.cvState = new rxjs.BehaviorSubject({
-                ready: false,
-                error: false,
-                loading: true,
-                state: 'loading'
-            });
-            if (!options) {
-                options = {};
-            }
-            this.configModule = this.generateConfigModule(options);
-            this.loadOpenCv();
-        }
-        /**
-         * load the OpenCV script
-         */
-        /**
-         * load the OpenCV script
-         * @return {?}
-         */
-        NgxOpenCVService.prototype.loadOpenCv = /**
-         * load the OpenCV script
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                this.cvState.next(this.newState('loading'));
-                // create global module variable
-                window['Module'] = this.configModule;
-                // create script element and set attributes
-                /** @type {?} */
-                var script = ( /** @type {?} */(document.createElement('script')));
-                script.setAttribute('async', '');
-                script.setAttribute('type', 'text/javascript');
-                // listen for errors
-                script.addEventListener('error', function () {
-                    /** @type {?} */
-                    var err = new Error('Failed to load ' + _this.configModule.scriptUrl);
-                    _this.cvState.next(_this.newState('error'));
-                    _this.cvState.error(err);
-                }, { passive: true });
-                // set script url
-                script.src = this.configModule.scriptUrl;
-                // insert script as first script tag
-                /** @type {?} */
-                var node = document.getElementsByTagName('script')[0];
-                if (node) {
-                    node.parentNode.insertBefore(script, node);
-                }
-                else {
-                    document.head.appendChild(script);
-                }
-            };
-        /**
-         * generates a new state object
-         * @param change - the new state of the module
-         */
-        /**
-         * generates a new state object
-         * @private
-         * @param {?} change - the new state of the module
-         * @return {?}
-         */
-        NgxOpenCVService.prototype.newState = /**
-         * generates a new state object
-         * @private
-         * @param {?} change - the new state of the module
-         * @return {?}
-         */
-            function (change) {
-                /** @type {?} */
-                var newStateObj = {
-                    ready: false,
-                    loading: false,
-                    error: false,
-                    state: ''
-                };
-                Object.keys(newStateObj).forEach(function (key) {
-                    if (key !== 'state') {
-                        if (key === change) {
-                            newStateObj[key] = true;
-                            newStateObj.state = key;
-                        }
-                        else {
-                            newStateObj[key] = false;
-                        }
-                    }
-                });
-                return newStateObj;
-            };
-        /**
-         * generates a config module for the global Module object
-         * @param options - configuration options
-         */
-        /**
-         * generates a config module for the global Module object
-         * @private
-         * @param {?} options - configuration options
-         * @return {?}
-         */
-        NgxOpenCVService.prototype.generateConfigModule = /**
-         * generates a config module for the global Module object
-         * @private
-         * @param {?} options - configuration options
-         * @return {?}
-         */
-            function (options) {
-                var _this = this;
-                return {
-                    scriptUrl: options.openCVDirPath ? options.openCVDirPath + "/opencv.js" : "/assets/opencv/opencv.js",
-                    wasmBinaryFile: 'opencv_js.wasm',
-                    usingWasm: true,
-                    onRuntimeInitialized: function () {
-                        _this._ngZone.run(function () {
-                            console.log('openCV Ready');
-                            _this.cvState.next(_this.newState('ready'));
-                            if (options.runOnOpenCVInit) {
-                                options.runOnOpenCVInit();
-                            }
-                        });
-                    }
-                };
-            };
-        NgxOpenCVService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        NgxOpenCVService.ctorParameters = function () {
-            return [
-                { type: undefined, decorators: [{ type: i0.Inject, args: [OpenCvConfigToken,] }] },
-                { type: i0.NgZone }
-            ];
-        };
-        /** @nocollapse */ NgxOpenCVService.ngInjectableDef = i0.defineInjectable({ factory: function NgxOpenCVService_Factory() { return new NgxOpenCVService(i0.inject(OpenCvConfigToken), i0.inject(i0.NgZone)); }, token: NgxOpenCVService, providedIn: "root" });
-        return NgxOpenCVService;
-    }());
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('rxjs'), require('@angular/core'), require('@angular/flex-layout'), require('@angular/material'), require('angular2-draggable'), require('@angular/common'), require('ngx-opencv')) :
+    typeof define === 'function' && define.amd ? define('ngx-document-scanner', ['exports', 'rxjs', '@angular/core', '@angular/flex-layout', '@angular/material', 'angular2-draggable', '@angular/common', 'ngx-opencv'], factory) :
+    (factory((global['ngx-document-scanner'] = {}),global.rxjs,global.ng.core,global.ng['flex-layout'],global.ng.material,global.angular2Draggable,global.ng.common,global.ngxOpencv));
+}(this, (function (exports,rxjs,i0,flexLayout,material,angular2Draggable,common,ngxOpencv) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -2104,7 +1957,7 @@
         /** @nocollapse */
         NgxDocScannerComponent.ctorParameters = function () {
             return [
-                { type: NgxOpenCVService },
+                { type: ngxOpencv.NgxOpenCVService },
                 { type: LimitsService },
                 { type: material.MatBottomSheet }
             ];
@@ -2223,7 +2076,9 @@
             function (config) {
                 return {
                     ngModule: NgxDocumentScannerModule,
-                    providers: [{ provide: OpenCvConfigToken, useValue: config }]
+                    providers: [
+                        { provide: ngxOpencv.OpenCvConfigToken, useValue: config },
+                    ],
                 };
             };
         NgxDocumentScannerModule.decorators = [
@@ -2242,6 +2097,7 @@
                             material.MatListModule,
                             angular2Draggable.AngularDraggableModule,
                             common.CommonModule,
+                            ngxOpencv.NgxOpenCVModule,
                         ],
                         exports: [
                             NgxDocScannerComponent,
@@ -2250,7 +2106,7 @@
                             NgxFilterMenuComponent,
                         ],
                         providers: [
-                            NgxOpenCVService,
+                            ngxOpencv.NgxOpenCVService,
                             LimitsService,
                         ]
                     },] }
@@ -2270,8 +2126,6 @@
 
     exports.NgxDocumentScannerModule = NgxDocumentScannerModule;
     exports.NgxDocScannerComponent = NgxDocScannerComponent;
-    exports.OpenCvConfigToken = OpenCvConfigToken;
-    exports.NgxOpenCVService = NgxOpenCVService;
     exports.ɵa = NgxDraggablePointComponent;
     exports.ɵc = NgxFilterMenuComponent;
     exports.ɵd = NgxShapeOutlineComponent;

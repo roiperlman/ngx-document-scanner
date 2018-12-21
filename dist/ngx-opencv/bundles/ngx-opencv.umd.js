@@ -175,7 +175,6 @@
         NgxOpenCVModule.decorators = [
             { type: i0.NgModule, args: [{
                         declarations: [],
-                        imports: [],
                         exports: [],
                         providers: [NgxOpenCVService]
                     },] }
@@ -194,8 +193,8 @@
      */
 
     exports.NgxOpenCVModule = NgxOpenCVModule;
-    exports.ɵb = NgxOpenCVService;
-    exports.ɵa = OpenCvConfigToken;
+    exports.OpenCvConfigToken = OpenCvConfigToken;
+    exports.NgxOpenCVService = NgxOpenCVService;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

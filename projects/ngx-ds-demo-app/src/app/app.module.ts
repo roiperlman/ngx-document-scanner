@@ -18,7 +18,7 @@ import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { RoutingModule } from './routing.module';
 import { DemoComponent } from './components/demo/demo.component';
-import {OpenCVConfig} from '../../../ngx-document-scanner/src/lib/PublicModels';
+import {OpenCVConfig} from 'ngx-document-scanner';
 
 const openCvConfig: OpenCVConfig = {
   openCVDirPath: './assets/opencv'

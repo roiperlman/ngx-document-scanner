@@ -5,8 +5,6 @@ import {NgxOpenCVService, OpenCvConfigToken} from './ngx-open-cv.service';
 
 @NgModule({
   declarations: [],
-  imports: [
-  ],
   exports: [],
   providers: [NgxOpenCVService]
 })
@@ -18,3 +16,5 @@ export class NgxOpenCVModule {
     };
   }
 }
+
+const a = 0;

@@ -139,7 +139,6 @@ class NgxOpenCVModule {
 NgxOpenCVModule.decorators = [
     { type: NgModule, args: [{
                 declarations: [],
-                imports: [],
                 exports: [],
                 providers: [NgxOpenCVService]
             },] }
@@ -160,6 +159,6 @@ NgxOpenCVModule.decorators = [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { NgxOpenCVModule, NgxOpenCVService as ɵb, OpenCvConfigToken as ɵa };
+export { NgxOpenCVModule, OpenCvConfigToken, NgxOpenCVService };
 
 //# sourceMappingURL=ngx-opencv.js.map

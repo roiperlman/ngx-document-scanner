@@ -1,6 +1,6 @@
 {
   "name": "ngx-document-scanner",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "keywords": [
     "opencv",
     "camscanner",
@@ -20,15 +20,19 @@
     "url": "https://github.com/roiperlman/ngx-document-scanner.git"
   },
   "peerDependencies": {
-    "angular2-draggable": "^2.1.7",
-    "@angular/flex-layout": "^7.0.0-beta.19",
-    "@angular/material": "^7.0.3",
     "@angular/common": "^7.0.0",
     "@angular/core": "^7.0.0",
-    "@angular/cdk": "~7.0.3",
     "@angular/platform-browser": "~7.0.0",
     "@angular/platform-browser-dynamic": "~7.0.0",
     "rxjs": "~6.3.3"
+  },
+  "dependencies": {
+    "angular2-draggable": "^2.1.7",
+    "ngx-opencv": "1.0.5",
+    "@angular/flex-layout": "^7.0.0-beta.19",
+    "@angular/material": "^7.0.3",
+    "@angular/cdk": "~7.0.3",
+    "tslib": "^1.9.0"
   },
   "main": "bundles/ngx-document-scanner.umd.js",
   "module": "fesm5/ngx-document-scanner.js",
@@ -39,8 +43,5 @@
   "fesm2015": "fesm2015/ngx-document-scanner.js",
   "typings": "ngx-document-scanner.d.ts",
   "metadata": "ngx-document-scanner.metadata.json",
-  "sideEffects": false,
-  "dependencies": {
-    "tslib": "^1.9.0"
-  }
+  "sideEffects": false
 }

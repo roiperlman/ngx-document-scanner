@@ -351,6 +351,9 @@ THE SOFTWARE.
 
 @angular/material/bottom-sheet
 
+ngx-opencv
+MIT
+
 @angular/flex-layout
 MIT
 <<<<<<< HEAD

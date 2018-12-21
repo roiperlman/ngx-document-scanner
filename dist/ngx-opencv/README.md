@@ -49,7 +49,6 @@ Inject NgxOpenCVService to the constructor of your component / service etc. and 
 		    (cvState: OpenCVState) => {  
 		      // do something with the state string
 		      this.cvState = cvState.state;  
-		      this.ready.emit(cvState.ready);  
 		      if (cvState.error) {
 		        // handle errors
 		      } else if (cvState.loading) {
