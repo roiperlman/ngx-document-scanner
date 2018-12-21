@@ -30,6 +30,12 @@ import {NgxOpenCVService, OpenCvConfigToken} from 'ngx-opencv';
     NgxOpenCVModule,
   ],
   exports: [
+    FlexLayoutModule,
+    MatButtonModule,
+    MatIconModule,
+    MatBottomSheetModule,
+    MatListModule,
+    AngularDraggableModule,
     NgxDocScannerComponent,
   ],
   entryComponents: [

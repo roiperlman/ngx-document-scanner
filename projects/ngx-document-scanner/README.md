@@ -22,7 +22,7 @@ import the package to your `app.module`. you'll need to configure the location o
     
     // set the location of the OpenCV files
     const openCVConfig: OpenCVConfig = {
-	  openCvDirPath: '/assets/opencv'  
+	  openCVDirPath: '/assets/opencv'  
 	};
 	
     @NgModule({ imports: 
