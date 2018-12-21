@@ -10,8 +10,8 @@
      */
     /** @type {?} */
     var OpenCvConfigToken = new i0.InjectionToken('OpenCV config object token');
-    var NgxOpenCvService = /** @class */ (function () {
-        function NgxOpenCvService(options, _ngZone) {
+    var NgxOpenCVService = /** @class */ (function () {
+        function NgxOpenCVService(options, _ngZone) {
             this._ngZone = _ngZone;
             this.cvState = new rxjs.BehaviorSubject({
                 ready: false,
@@ -32,7 +32,7 @@
          * load the OpenCV script
          * @return {?}
          */
-        NgxOpenCvService.prototype.loadOpenCv = /**
+        NgxOpenCVService.prototype.loadOpenCv = /**
          * load the OpenCV script
          * @return {?}
          */
@@ -75,7 +75,7 @@
          * @param {?} change - the new state of the module
          * @return {?}
          */
-        NgxOpenCvService.prototype.newState = /**
+        NgxOpenCVService.prototype.newState = /**
          * generates a new state object
          * @private
          * @param {?} change - the new state of the module
@@ -112,7 +112,7 @@
          * @param {?} options - configuration options
          * @return {?}
          */
-        NgxOpenCvService.prototype.generateConfigModule = /**
+        NgxOpenCVService.prototype.generateConfigModule = /**
          * generates a config module for the global Module object
          * @private
          * @param {?} options - configuration options
@@ -135,52 +135,52 @@
                     }
                 };
             };
-        NgxOpenCvService.decorators = [
+        NgxOpenCVService.decorators = [
             { type: i0.Injectable, args: [{
                         providedIn: 'root'
                     },] }
         ];
         /** @nocollapse */
-        NgxOpenCvService.ctorParameters = function () {
+        NgxOpenCVService.ctorParameters = function () {
             return [
                 { type: undefined, decorators: [{ type: i0.Inject, args: [OpenCvConfigToken,] }] },
                 { type: i0.NgZone }
             ];
         };
-        /** @nocollapse */ NgxOpenCvService.ngInjectableDef = i0.defineInjectable({ factory: function NgxOpenCvService_Factory() { return new NgxOpenCvService(i0.inject(OpenCvConfigToken), i0.inject(i0.NgZone)); }, token: NgxOpenCvService, providedIn: "root" });
-        return NgxOpenCvService;
+        /** @nocollapse */ NgxOpenCVService.ngInjectableDef = i0.defineInjectable({ factory: function NgxOpenCVService_Factory() { return new NgxOpenCVService(i0.inject(OpenCvConfigToken), i0.inject(i0.NgZone)); }, token: NgxOpenCVService, providedIn: "root" });
+        return NgxOpenCVService;
     }());
 
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    var NgxOpencvModule = /** @class */ (function () {
-        function NgxOpencvModule() {
+    var NgxOpenCVModule = /** @class */ (function () {
+        function NgxOpenCVModule() {
         }
         /**
          * @param {?} config
          * @return {?}
          */
-        NgxOpencvModule.forRoot = /**
+        NgxOpenCVModule.forRoot = /**
          * @param {?} config
          * @return {?}
          */
             function (config) {
                 return {
-                    ngModule: NgxOpencvModule,
+                    ngModule: NgxOpenCVModule,
                     providers: [{ provide: OpenCvConfigToken, useValue: config }]
                 };
             };
-        NgxOpencvModule.decorators = [
+        NgxOpenCVModule.decorators = [
             { type: i0.NgModule, args: [{
                         declarations: [],
                         imports: [],
                         exports: [],
-                        providers: [NgxOpenCvService]
+                        providers: [NgxOpenCVService]
                     },] }
         ];
-        return NgxOpencvModule;
+        return NgxOpenCVModule;
     }());
 
     /**
@@ -193,8 +193,8 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
-    exports.NgxOpencvModule = NgxOpencvModule;
-    exports.ɵb = NgxOpenCvService;
+    exports.NgxOpenCVModule = NgxOpenCVModule;
+    exports.ɵb = NgxOpenCVService;
     exports.ɵa = OpenCvConfigToken;
 
     Object.defineProperty(exports, '__esModule', { value: true });

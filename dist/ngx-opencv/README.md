@@ -22,11 +22,11 @@ import the module to your `app.module`. you'll need to configure the location of
     
     // set the location of the OpenCV files
     const openCVConfig: OpenCVConfig = {
-	  openCvDirPath: '/assets/opencv'  
+	  openCVDirPath: '/assets/opencv'  
 	};
 	
     @NgModule({ imports: [
-      NgxDocumentScannerModule.forRoot(openCVConfig)
+      NgxOpenCVModule.forRoot(openCVConfig)
     ],
       bootstrap: [AppComponent]  
     })
@@ -41,7 +41,7 @@ this is very important to avoid TypeScript errors.
 
 ## Usage
 
-Inject NgxOpenCVSerive to the constructor of your component / service etc. and subscribe to the cvState observable.
+Inject NgxOpenCVService to the constructor of your component / service etc. and subscribe to the cvState observable.
 
 		constructor(private ngxOpenCv: NgxOpenCVService) {  
 		  // subscribe to status of OpenCV module  
@@ -73,12 +73,12 @@ The observable emits an `OpenCVState` object when changes occur, with the follow
 
 
 ## Configuration Options
-You can configure the service with the OpenCvConfig object
+You can configure the service with the OpenCVConfig object
 
     import {OpenCvConfig} from 'ngx-document-scanner';
 
 | property | type | description |  
 |--|--|--|  
-|openCvDirPath| string |  path to the directory containing the OpenCV files, in the form of `'/path/to/[opencv directory]'`. directory must contain `opencv.js` & `opencv_js.wasm`.|
+|openCVDirPath| string |  path to the directory containing the OpenCV files, in the form of `'/path/to/[opencv directory]'`. directory must contain `opencv.js` & `opencv_js.wasm`.|
 |runOnOpenCVInit| Function| additional callback that will run when OpenCv has finished loading and parsing. callback runs in the angular zone in the context of the service.|
     

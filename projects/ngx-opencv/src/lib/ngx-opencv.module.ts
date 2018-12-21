@@ -1,6 +1,6 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {OpenCVConfig} from './models';
-import {NgxOpenCvService, OpenCvConfigToken} from './ngx-open-cv.service';
+import {NgxOpenCVService, OpenCvConfigToken} from './ngx-open-cv.service';
 
 
 @NgModule({
@@ -8,12 +8,12 @@ import {NgxOpenCvService, OpenCvConfigToken} from './ngx-open-cv.service';
   imports: [
   ],
   exports: [],
-  providers: [NgxOpenCvService]
+  providers: [NgxOpenCVService]
 })
-export class NgxOpencvModule {
+export class NgxOpenCVModule {
   static forRoot(config: OpenCVConfig): ModuleWithProviders {
     return {
-      ngModule: NgxOpencvModule,
+      ngModule: NgxOpenCVModule,
       providers: [{ provide: OpenCvConfigToken, useValue: config }]
     };
   }

@@ -1,5 +1,4 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
-import {NgxOpenCVService, OpenCvConfigToken} from './services/ngx-opencv.service';
 import {NgxDraggablePointComponent} from './components/draggable-point/ngx-draggable-point.component';
 import {NgxFilterMenuComponent} from './components/filter-menu/ngx-filter-menu.component';
 import {NgxShapeOutlineComponent} from './components/shape-outline/ngx-shape-outline.component';
@@ -10,6 +9,8 @@ import {MatBottomSheetModule, MatButtonModule, MatIconModule, MatListModule} fro
 import {AngularDraggableModule} from 'angular2-draggable';
 import {CommonModule} from '@angular/common';
 import {OpenCVConfig} from './PublicModels';
+import {NgxOpenCVModule} from 'ngx-opencv';
+import {NgxOpenCVService, OpenCvConfigToken} from 'ngx-opencv';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {OpenCVConfig} from './PublicModels';
     MatListModule,
     AngularDraggableModule,
     CommonModule,
+    NgxOpenCVModule,
   ],
   exports: [
     NgxDocScannerComponent,
@@ -42,7 +44,9 @@ export class NgxDocumentScannerModule {
   static forRoot(config: OpenCVConfig): ModuleWithProviders {
     return {
       ngModule: NgxDocumentScannerModule,
-      providers: [{ provide: OpenCvConfigToken, useValue: config }]
+      providers: [
+        { provide: OpenCvConfigToken, useValue: config },
+      ],
     };
   }
 }

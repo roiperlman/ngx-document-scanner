@@ -7,7 +7,7 @@ export const OpenCvConfigToken = new InjectionToken<OpenCVConfig>('OpenCV config
 @Injectable({
   providedIn: 'root'
 })
-export class NgxOpenCvService {
+export class NgxOpenCVService {
 
   cvState = new BehaviorSubject<OpenCVState>({
     ready: false,

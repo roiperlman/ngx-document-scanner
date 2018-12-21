@@ -2,7 +2,7 @@ import { InjectionToken, NgZone } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { OpenCVConfig, OpenCVState } from './models';
 export declare const OpenCvConfigToken: InjectionToken<OpenCVConfig>;
-export declare class NgxOpenCvService {
+export declare class NgxOpenCVService {
     private _ngZone;
     cvState: BehaviorSubject<OpenCVState>;
     configModule: OpenCvConfigModule;

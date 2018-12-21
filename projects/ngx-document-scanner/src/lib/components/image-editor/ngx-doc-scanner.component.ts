@@ -3,9 +3,10 @@ import {LimitsService, PointPositionChange, PositionChangeData, RolesArray} from
 import {MatBottomSheet} from '@angular/material';
 import {NgxFilterMenuComponent} from '../filter-menu/ngx-filter-menu.component';
 import {PointShape} from '../../PrivateModels';
-import {NgxOpenCVService} from '../../services/ngx-opencv.service';
+// import {NgxOpenCVService} from '../../services/ngx-opencv.service';
 import {ImageDimensions, DocScannerConfig, OpenCVState} from '../../PublicModels';
 import {EditorActionButton, PointOptions} from '../../PrivateModels';
+import {NgxOpenCVService} from 'ngx-opencv';
 
 declare var cv: any;
 

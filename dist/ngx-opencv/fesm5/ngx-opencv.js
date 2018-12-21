@@ -7,8 +7,8 @@ import { BehaviorSubject } from 'rxjs';
  */
 /** @type {?} */
 var OpenCvConfigToken = new InjectionToken('OpenCV config object token');
-var NgxOpenCvService = /** @class */ (function () {
-    function NgxOpenCvService(options, _ngZone) {
+var NgxOpenCVService = /** @class */ (function () {
+    function NgxOpenCVService(options, _ngZone) {
         this._ngZone = _ngZone;
         this.cvState = new BehaviorSubject({
             ready: false,
@@ -29,7 +29,7 @@ var NgxOpenCvService = /** @class */ (function () {
      * load the OpenCV script
      * @return {?}
      */
-    NgxOpenCvService.prototype.loadOpenCv = /**
+    NgxOpenCVService.prototype.loadOpenCv = /**
      * load the OpenCV script
      * @return {?}
      */
@@ -72,7 +72,7 @@ var NgxOpenCvService = /** @class */ (function () {
      * @param {?} change - the new state of the module
      * @return {?}
      */
-    NgxOpenCvService.prototype.newState = /**
+    NgxOpenCVService.prototype.newState = /**
      * generates a new state object
      * @private
      * @param {?} change - the new state of the module
@@ -109,7 +109,7 @@ var NgxOpenCvService = /** @class */ (function () {
      * @param {?} options - configuration options
      * @return {?}
      */
-    NgxOpenCvService.prototype.generateConfigModule = /**
+    NgxOpenCVService.prototype.generateConfigModule = /**
      * generates a config module for the global Module object
      * @private
      * @param {?} options - configuration options
@@ -132,50 +132,50 @@ var NgxOpenCvService = /** @class */ (function () {
             }
         };
     };
-    NgxOpenCvService.decorators = [
+    NgxOpenCVService.decorators = [
         { type: Injectable, args: [{
                     providedIn: 'root'
                 },] }
     ];
     /** @nocollapse */
-    NgxOpenCvService.ctorParameters = function () { return [
+    NgxOpenCVService.ctorParameters = function () { return [
         { type: undefined, decorators: [{ type: Inject, args: [OpenCvConfigToken,] }] },
         { type: NgZone }
     ]; };
-    /** @nocollapse */ NgxOpenCvService.ngInjectableDef = defineInjectable({ factory: function NgxOpenCvService_Factory() { return new NgxOpenCvService(inject(OpenCvConfigToken), inject(NgZone)); }, token: NgxOpenCvService, providedIn: "root" });
-    return NgxOpenCvService;
+    /** @nocollapse */ NgxOpenCVService.ngInjectableDef = defineInjectable({ factory: function NgxOpenCVService_Factory() { return new NgxOpenCVService(inject(OpenCvConfigToken), inject(NgZone)); }, token: NgxOpenCVService, providedIn: "root" });
+    return NgxOpenCVService;
 }());
 
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-var NgxOpencvModule = /** @class */ (function () {
-    function NgxOpencvModule() {
+var NgxOpenCVModule = /** @class */ (function () {
+    function NgxOpenCVModule() {
     }
     /**
      * @param {?} config
      * @return {?}
      */
-    NgxOpencvModule.forRoot = /**
+    NgxOpenCVModule.forRoot = /**
      * @param {?} config
      * @return {?}
      */
     function (config) {
         return {
-            ngModule: NgxOpencvModule,
+            ngModule: NgxOpenCVModule,
             providers: [{ provide: OpenCvConfigToken, useValue: config }]
         };
     };
-    NgxOpencvModule.decorators = [
+    NgxOpenCVModule.decorators = [
         { type: NgModule, args: [{
                     declarations: [],
                     imports: [],
                     exports: [],
-                    providers: [NgxOpenCvService]
+                    providers: [NgxOpenCVService]
                 },] }
     ];
-    return NgxOpencvModule;
+    return NgxOpenCVModule;
 }());
 
 /**
@@ -193,6 +193,6 @@ var NgxOpencvModule = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { NgxOpencvModule, NgxOpenCvService as ɵb, OpenCvConfigToken as ɵa };
+export { NgxOpenCVModule, NgxOpenCVService as ɵb, OpenCvConfigToken as ɵa };
 
 //# sourceMappingURL=ngx-opencv.js.map

@@ -20,7 +20,7 @@ import { RoutingModule } from './routing.module';
 import { DemoComponent } from './components/demo/demo.component';
 import {OpenCVConfig} from '../../../ngx-document-scanner/src/lib/PublicModels';
 
-const OpenCvConfig: OpenCVConfig = {
+const openCvConfig: OpenCVConfig = {
   openCVDirPath: './assets/opencv'
 };
 
@@ -37,7 +37,7 @@ const OpenCvConfig: OpenCVConfig = {
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    NgxDocumentScannerModule.forRoot(OpenCvConfig),
+    NgxDocumentScannerModule.forRoot(openCvConfig),
     BrowserAnimationsModule,
     LayoutModule,
     MatToolbarModule,

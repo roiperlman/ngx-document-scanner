@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
  */
 /** @type {?} */
 const OpenCvConfigToken = new InjectionToken('OpenCV config object token');
-class NgxOpenCvService {
+class NgxOpenCVService {
     /**
      * @param {?} options
      * @param {?} _ngZone
@@ -108,40 +108,40 @@ class NgxOpenCvService {
         };
     }
 }
-NgxOpenCvService.decorators = [
+NgxOpenCVService.decorators = [
     { type: Injectable, args: [{
                 providedIn: 'root'
             },] }
 ];
 /** @nocollapse */
-NgxOpenCvService.ctorParameters = () => [
+NgxOpenCVService.ctorParameters = () => [
     { type: undefined, decorators: [{ type: Inject, args: [OpenCvConfigToken,] }] },
     { type: NgZone }
 ];
-/** @nocollapse */ NgxOpenCvService.ngInjectableDef = defineInjectable({ factory: function NgxOpenCvService_Factory() { return new NgxOpenCvService(inject(OpenCvConfigToken), inject(NgZone)); }, token: NgxOpenCvService, providedIn: "root" });
+/** @nocollapse */ NgxOpenCVService.ngInjectableDef = defineInjectable({ factory: function NgxOpenCVService_Factory() { return new NgxOpenCVService(inject(OpenCvConfigToken), inject(NgZone)); }, token: NgxOpenCVService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class NgxOpencvModule {
+class NgxOpenCVModule {
     /**
      * @param {?} config
      * @return {?}
      */
     static forRoot(config) {
         return {
-            ngModule: NgxOpencvModule,
+            ngModule: NgxOpenCVModule,
             providers: [{ provide: OpenCvConfigToken, useValue: config }]
         };
     }
 }
-NgxOpencvModule.decorators = [
+NgxOpenCVModule.decorators = [
     { type: NgModule, args: [{
                 declarations: [],
                 imports: [],
                 exports: [],
-                providers: [NgxOpenCvService]
+                providers: [NgxOpenCVService]
             },] }
 ];
 
@@ -160,6 +160,6 @@ NgxOpencvModule.decorators = [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { NgxOpencvModule, NgxOpenCvService as ɵb, OpenCvConfigToken as ɵa };
+export { NgxOpenCVModule, NgxOpenCVService as ɵb, OpenCvConfigToken as ɵa };
 
 //# sourceMappingURL=ngx-opencv.js.map
