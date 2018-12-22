@@ -2100,6 +2100,12 @@
                             ngxOpencv.NgxOpenCVModule,
                         ],
                         exports: [
+                            flexLayout.FlexLayoutModule,
+                            material.MatButtonModule,
+                            material.MatIconModule,
+                            material.MatBottomSheetModule,
+                            material.MatListModule,
+                            angular2Draggable.AngularDraggableModule,
                             NgxDocScannerComponent,
                         ],
                         entryComponents: [

@@ -1948,6 +1948,12 @@ var NgxDocumentScannerModule = /** @class */ (function () {
                         NgxOpenCVModule,
                     ],
                     exports: [
+                        FlexLayoutModule,
+                        MatButtonModule,
+                        MatIconModule,
+                        MatBottomSheetModule,
+                        MatListModule,
+                        AngularDraggableModule,
                         NgxDocScannerComponent,
                     ],
                     entryComponents: [

@@ -1487,6 +1487,12 @@ NgxDocumentScannerModule.decorators = [
                     NgxOpenCVModule,
                 ],
                 exports: [
+                    FlexLayoutModule,
+                    MatButtonModule,
+                    MatIconModule,
+                    MatBottomSheetModule,
+                    MatListModule,
+                    AngularDraggableModule,
                     NgxDocScannerComponent,
                 ],
                 entryComponents: [
