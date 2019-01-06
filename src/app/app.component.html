@@ -1,0 +1,13 @@
+
+<!--<div style="margin: auto; position: relative; top: 100px; width: 300px; height: 600px; border: 1px black solid;" #dragArea>-->
+  <!--<app-draggable-point #topLeft [startPosition]="{x: 0, y: 0}" [limitRoles]="['top', 'left']" [container]="dragArea"></app-draggable-point>-->
+  <!--<app-draggable-point #topRight [startPosition]="{x: 100, y: 0}" [limitRoles]="['top', 'right']" [container]="dragArea"></app-draggable-point>-->
+  <!--<app-draggable-point #bottomLeft [startPosition]="{x: 0, y: 100}" [limitRoles]="['bottom', 'left']" [container]="dragArea"></app-draggable-point>-->
+  <!--<app-draggable-point #bottomRight [startPosition]="{x: 100, y: 100}" [limitRoles]="['bottom', 'right']" [container]="dragArea"></app-draggable-point>-->
+  <!--<app-shape-outine [weight]="5"></app-shape-outine>-->
+<!--</div>-->
+
+<app-image-editor *ngIf="image" [file]="image"></app-image-editor>
+
+<router-outlet></router-outlet>
+<input type="file" [(ngModel)]="image">
