@@ -1,9 +1,10 @@
-import { Inject, Injectable, InjectionToken, NgZone, NgModule, defineInjectable, inject } from '@angular/core';
+import { InjectionToken, Injectable, Inject, NgZone, ɵɵdefineInjectable, ɵɵinject, NgModule } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/ngx-open-cv.service.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const OpenCvConfigToken = new InjectionToken('OpenCV config object token');
@@ -40,12 +41,15 @@ class NgxOpenCVService {
         script.setAttribute('async', '');
         script.setAttribute('type', 'text/javascript');
         // listen for errors
-        script.addEventListener('error', () => {
+        script.addEventListener('error', (/**
+         * @return {?}
+         */
+        () => {
             /** @type {?} */
             const err = new Error('Failed to load ' + this.configModule.scriptUrl);
             this.cvState.next(this.newState('error'));
             this.cvState.error(err);
-        }, { passive: true });
+        }), { passive: true });
         // set script url
         script.src = this.configModule.scriptUrl;
         // insert script as first script tag
@@ -72,7 +76,11 @@ class NgxOpenCVService {
             error: false,
             state: ''
         };
-        Object.keys(newStateObj).forEach(key => {
+        Object.keys(newStateObj).forEach((/**
+         * @param {?} key
+         * @return {?}
+         */
+        key => {
             if (key !== 'state') {
                 if (key === change) {
                     newStateObj[key] = true;
@@ -82,7 +90,7 @@ class NgxOpenCVService {
                     newStateObj[key] = false;
                 }
             }
-        });
+        }));
         return newStateObj;
     }
     /**
@@ -96,15 +104,21 @@ class NgxOpenCVService {
             scriptUrl: options.openCVDirPath ? `${options.openCVDirPath}/opencv.js` : `/assets/opencv/opencv.js`,
             wasmBinaryFile: 'opencv_js.wasm',
             usingWasm: true,
-            onRuntimeInitialized: () => {
-                this._ngZone.run(() => {
+            onRuntimeInitialized: (/**
+             * @return {?}
+             */
+            () => {
+                this._ngZone.run((/**
+                 * @return {?}
+                 */
+                () => {
                     console.log('openCV Ready');
                     this.cvState.next(this.newState('ready'));
                     if (options.runOnOpenCVInit) {
                         options.runOnOpenCVInit();
                     }
-                });
-            }
+                }));
+            })
         };
     }
 }
@@ -118,11 +132,38 @@ NgxOpenCVService.ctorParameters = () => [
     { type: undefined, decorators: [{ type: Inject, args: [OpenCvConfigToken,] }] },
     { type: NgZone }
 ];
-/** @nocollapse */ NgxOpenCVService.ngInjectableDef = defineInjectable({ factory: function NgxOpenCVService_Factory() { return new NgxOpenCVService(inject(OpenCvConfigToken), inject(NgZone)); }, token: NgxOpenCVService, providedIn: "root" });
+/** @nocollapse */ NgxOpenCVService.ɵprov = ɵɵdefineInjectable({ factory: function NgxOpenCVService_Factory() { return new NgxOpenCVService(ɵɵinject(OpenCvConfigToken), ɵɵinject(NgZone)); }, token: NgxOpenCVService, providedIn: "root" });
+if (false) {
+    /** @type {?} */
+    NgxOpenCVService.prototype.cvState;
+    /** @type {?} */
+    NgxOpenCVService.prototype.configModule;
+    /**
+     * @type {?}
+     * @private
+     */
+    NgxOpenCVService.prototype._ngZone;
+}
+/**
+ * describes the global Module object that is used to initiate OpenCV.js
+ * @record
+ */
+function OpenCvConfigModule() { }
+if (false) {
+    /** @type {?} */
+    OpenCvConfigModule.prototype.scriptUrl;
+    /** @type {?} */
+    OpenCvConfigModule.prototype.wasmBinaryFile;
+    /** @type {?} */
+    OpenCvConfigModule.prototype.usingWasm;
+    /** @type {?} */
+    OpenCvConfigModule.prototype.onRuntimeInitialized;
+}
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/ngx-opencv.module.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class NgxOpenCVModule {
     /**
@@ -143,22 +184,61 @@ NgxOpenCVModule.decorators = [
                 providers: [NgxOpenCVService]
             },] }
 ];
+/** @type {?} */
+const a = 0;
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/models.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * describes a configuration object for the OpenCV service
+ * @record
+ */
+function OpenCVConfig() { }
+if (false) {
+    /**
+     * path to the directory containing the OpenCV files, in the form of '/path/to/<opencv directory>'
+     * directory must contain the the following files:
+     * --<OpenCvDir>
+     * ----opencv.js
+     * ----opencv_js.wasm
+     * @type {?|undefined}
+     */
+    OpenCVConfig.prototype.openCVDirPath;
+    /**
+     * additional callback that will run when OpenCv has finished loading and parsing
+     * @type {?|undefined}
+     */
+    OpenCVConfig.prototype.runOnOpenCVInit;
+}
+/**
+ * @record
+ */
+function OpenCVState() { }
+if (false) {
+    /** @type {?} */
+    OpenCVState.prototype.ready;
+    /** @type {?} */
+    OpenCVState.prototype.loading;
+    /** @type {?} */
+    OpenCVState.prototype.error;
+    /** @type {?} */
+    OpenCVState.prototype.state;
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: public_api.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: ngx-opencv.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { NgxOpenCVModule, OpenCvConfigToken, NgxOpenCVService };
-
+export { NgxOpenCVModule, NgxOpenCVService, OpenCvConfigToken };
 //# sourceMappingURL=ngx-opencv.js.map

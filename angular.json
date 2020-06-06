@@ -175,5 +175,8 @@
       }
     }
   },
-  "defaultProject": "ngx-ds-demo-app"
+  "defaultProject": "ngx-ds-demo-app",
+  "cli": {
+    "analytics": false
+  }
 }

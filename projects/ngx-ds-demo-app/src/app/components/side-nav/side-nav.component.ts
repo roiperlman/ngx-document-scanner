@@ -2,7 +2,7 @@ import {AfterViewInit, Component, EventEmitter, Output, ViewChild} from '@angula
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import {MatToolbar} from '@angular/material';
+import {MatToolbar} from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-side-nav',

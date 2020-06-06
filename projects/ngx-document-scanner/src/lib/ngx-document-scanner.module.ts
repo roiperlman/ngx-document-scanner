@@ -5,11 +5,14 @@ import {NgxShapeOutlineComponent} from './components/shape-outline/ngx-shape-out
 import {NgxDocScannerComponent} from './components/image-editor/ngx-doc-scanner.component';
 import {LimitsService} from './services/limits.service';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {MatBottomSheetModule, MatButtonModule, MatIconModule, MatListModule} from '@angular/material';
 import {AngularDraggableModule} from 'angular2-draggable';
 import {CommonModule} from '@angular/common';
 import {OpenCVConfig} from './PublicModels';
 import {NgxOpenCVModule} from 'ngx-opencv';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatListModule } from '@angular/material/list';
 import {NgxOpenCVService, OpenCvConfigToken} from 'ngx-opencv';
 
 @NgModule({
