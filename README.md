@@ -84,7 +84,7 @@ import the package to your `app.module`. you'll need to configure the location o
 ## Configuration Object
 optional configuration values that can be passed to the component. 
 
-    import {DocScannerConfig} form 'ngx-document-scanner'
+    import {DocScannerConfig} from 'ngx-document-scanner'
     config: DocScannerConfig = {
 	    ....
     }
