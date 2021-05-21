@@ -1,6 +1,6 @@
 import { EventEmitter } from '@angular/core';
 import { EditorActionButton } from '../../PrivateModels';
-import { MatBottomSheetRef } from '@angular/material';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 export declare class NgxFilterMenuComponent {
     private bottomSheetRef;
     data: any;

@@ -23,7 +23,7 @@ export declare class LimitsService {
     /**
      * set privew pane dimensions
      */
-    setPaneDimensions(dimensions: ImageDimensions): Promise<{}>;
+    setPaneDimensions(dimensions: ImageDimensions): Promise<unknown>;
     /**
      * repositions points externally
      */

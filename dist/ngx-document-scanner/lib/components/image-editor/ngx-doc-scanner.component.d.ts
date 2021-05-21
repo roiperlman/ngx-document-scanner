@@ -1,6 +1,6 @@
 import { EventEmitter, OnInit } from '@angular/core';
 import { LimitsService } from '../../services/limits.service';
-import { MatBottomSheet } from '@angular/material';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { PointShape } from '../../PrivateModels';
 import { ImageDimensions, DocScannerConfig } from '../../PublicModels';
 import { EditorActionButton, PointOptions } from '../../PrivateModels';
@@ -20,7 +20,7 @@ export declare class NgxDocScannerComponent implements OnInit {
     /**
      * returns an array of buttons according to the editor mode
      */
-    readonly displayedButtons: EditorActionButton[];
+    get displayedButtons(): EditorActionButton[];
     /**
      * max width of the preview area
      */
@@ -109,7 +109,7 @@ export declare class NgxDocScannerComponent implements OnInit {
      * set image for editing
      * @param file - file from form input
      */
-    file: File;
+    set file(file: File);
     /**
      * editor configuration object
      */

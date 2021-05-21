@@ -1,15 +1,19 @@
+import { Injectable, ɵɵdefineInjectable, Component, Input, EventEmitter, Inject, Output, ViewChild, ElementRef, NgModule } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA, MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { __awaiter } from 'tslib';
-import { Injectable, Component, EventEmitter, Inject, Output, Input, ViewChild, NgModule, defineInjectable, ElementRef } from '@angular/core';
+import { NgxOpenCVService, OpenCvConfigToken, NgxOpenCVModule } from 'ngx-opencv';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef, MatBottomSheet, MatBottomSheetModule, MatButtonModule, MatIconModule, MatListModule } from '@angular/material';
 import { AngularDraggableModule } from 'angular2-draggable';
 import { CommonModule } from '@angular/common';
-import { NgxOpenCVService, NgxOpenCVModule, OpenCvConfigToken } from 'ngx-opencv';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/services/limits.service.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LimitsService {
     constructor() {
@@ -41,11 +45,16 @@ class LimitsService {
      * @return {?}
      */
     setPaneDimensions(dimensions) {
-        return new Promise((resolve, reject) => {
+        return new Promise((/**
+         * @param {?} resolve
+         * @param {?} reject
+         * @return {?}
+         */
+        (resolve, reject) => {
             this._paneDimensions = dimensions;
             this.paneDimensions.next(dimensions);
             resolve();
-        });
+        }));
     }
     /**
      * repositions points externally
@@ -54,9 +63,13 @@ class LimitsService {
      */
     repositionPoints(positions) {
         this._points = positions;
-        positions.forEach(position => {
+        positions.forEach((/**
+         * @param {?} position
+         * @return {?}
+         */
+        position => {
             this.positionChange(position);
-        });
+        }));
         this.repositionEvent.next(positions);
     }
     /**
@@ -70,14 +83,26 @@ class LimitsService {
         // for each direction:
         // 1. filter the _points that have a role as the direction's limit
         // 2. for top and left find max x | y values, and min for right and bottom
-        this.limitDirections.forEach(direction => {
+        this.limitDirections.forEach((/**
+         * @param {?} direction
+         * @return {?}
+         */
+        direction => {
             /** @type {?} */
-            const relevantPoints = this._points.filter(point => {
+            const relevantPoints = this._points.filter((/**
+             * @param {?} point
+             * @return {?}
+             */
+            point => {
                 return point.roles.includes(direction);
-            })
-                .map((point) => {
+            }))
+                .map((/**
+             * @param {?} point
+             * @return {?}
+             */
+            (point) => {
                 return point[this.getDirectionAxis(direction)];
-            });
+            }));
             /** @type {?} */
             let limit;
             if (direction === 'top' || direction === 'left') {
@@ -87,7 +112,7 @@ class LimitsService {
                 limit = Math.min(...relevantPoints);
             }
             this._limits[direction] = limit;
-        });
+        }));
         this.limits.next(this._limits);
         this.positions.next(Array.from(this._points));
     }
@@ -99,9 +124,13 @@ class LimitsService {
     updatePosition(positionChange) {
         // finds the current position of the point by it's roles, than splices it for the new position or pushes it if it's not yet in the array
         /** @type {?} */
-        const index = this._points.findIndex(point => {
+        const index = this._points.findIndex((/**
+         * @param {?} point
+         * @return {?}
+         */
+        point => {
             return this.compareArray(positionChange.roles, point.roles);
-        });
+        }));
         if (index === -1) {
             this._points.push(positionChange);
         }
@@ -116,9 +145,13 @@ class LimitsService {
      */
     exceedsLimit(positionChange) {
         /** @type {?} */
-        const pointLimits = this.limitDirections.filter(direction => {
+        const pointLimits = this.limitDirections.filter((/**
+         * @param {?} direction
+         * @return {?}
+         */
+        direction => {
             return !positionChange.roles.includes(direction);
-        });
+        }));
         /** @type {?} */
         const limitException = {
             exceeds: false,
@@ -132,7 +165,11 @@ class LimitsService {
             }
         };
         // limit directions are the opposite sides of the point's roles
-        pointLimits.forEach(direction => {
+        pointLimits.forEach((/**
+         * @param {?} direction
+         * @return {?}
+         */
+        direction => {
             /** @type {?} */
             const directionAxis = this.getDirectionAxis(direction);
             if (direction === 'top' || direction === 'left') {
@@ -147,7 +184,7 @@ class LimitsService {
                     limitException.resetCoordinates[directionAxis] = this._limits[direction];
                 }
             }
-        });
+        }));
         if (limitException.resetCoefficients.x !== 0 || limitException.resetCoefficients.y !== 0) {
             limitException.exceeds = true;
         }
@@ -162,15 +199,23 @@ class LimitsService {
      */
     rotateClockwise(resizeRatios, initialPreviewDimensions, initialPositions) {
         // convert positions to ratio between position to initial pane dimension
-        initialPositions = initialPositions.map(point => {
+        initialPositions = initialPositions.map((/**
+         * @param {?} point
+         * @return {?}
+         */
+        point => {
             return new PositionChangeData({
                 x: point.x / initialPreviewDimensions.width,
                 y: point.y / initialPreviewDimensions.height,
             }, point.roles);
-        });
-        this.repositionPoints(initialPositions.map(point => {
-            return this.rotateCornerClockwise(point);
         }));
+        this.repositionPoints(initialPositions.map((/**
+         * @param {?} point
+         * @return {?}
+         */
+        point => {
+            return this.rotateCornerClockwise(point);
+        })));
     }
     /**
      * returns the corner positions after a 90 degrees clockwise rotation
@@ -194,9 +239,13 @@ class LimitsService {
             ['bottom', 'right'],
             ['bottom', 'left']
         ];
-        rotated.roles = order[order.findIndex(roles => {
+        rotated.roles = order[order.findIndex((/**
+         * @param {?} roles
+         * @return {?}
+         */
+        roles => {
             return this.compareArray(roles, corner.roles);
-        }) + 1];
+        })) + 1];
         return rotated;
     }
     /**
@@ -206,9 +255,13 @@ class LimitsService {
      * @return {?} boolean
      */
     compareArray(array1, array2) {
-        return array1.every((element) => {
+        return array1.every((/**
+         * @param {?} element
+         * @return {?}
+         */
+        (element) => {
             return array2.includes(element);
-        }) && array1.length === array2.length;
+        })) && array1.length === array2.length;
     }
     /**
      * @private
@@ -231,7 +284,66 @@ LimitsService.decorators = [
 ];
 /** @nocollapse */
 LimitsService.ctorParameters = () => [];
-/** @nocollapse */ LimitsService.ngInjectableDef = defineInjectable({ factory: function LimitsService_Factory() { return new LimitsService(); }, token: LimitsService, providedIn: "root" });
+/** @nocollapse */ LimitsService.ɵprov = ɵɵdefineInjectable({ factory: function LimitsService_Factory() { return new LimitsService(); }, token: LimitsService, providedIn: "root" });
+if (false) {
+    /**
+     * @type {?}
+     * @private
+     */
+    LimitsService.prototype.limitDirections;
+    /**
+     * stores the crop limits limits
+     * @type {?}
+     * @private
+     */
+    LimitsService.prototype._limits;
+    /**
+     * stores the array of the draggable points displayed on the crop area
+     * @type {?}
+     * @private
+     */
+    LimitsService.prototype._points;
+    /**
+     * stores the pane dimensions
+     * @type {?}
+     * @private
+     */
+    LimitsService.prototype._paneDimensions;
+    /** @type {?} */
+    LimitsService.prototype.positions;
+    /** @type {?} */
+    LimitsService.prototype.repositionEvent;
+    /** @type {?} */
+    LimitsService.prototype.limits;
+    /** @type {?} */
+    LimitsService.prototype.paneDimensions;
+}
+/**
+ * @record
+ */
+function PointPositionChange() { }
+if (false) {
+    /** @type {?} */
+    PointPositionChange.prototype.x;
+    /** @type {?} */
+    PointPositionChange.prototype.y;
+    /** @type {?} */
+    PointPositionChange.prototype.roles;
+}
+/**
+ * @record
+ */
+function AreaLimits() { }
+if (false) {
+    /** @type {?} */
+    AreaLimits.prototype.top;
+    /** @type {?} */
+    AreaLimits.prototype.bottom;
+    /** @type {?} */
+    AreaLimits.prototype.right;
+    /** @type {?} */
+    AreaLimits.prototype.left;
+}
 class PositionChangeData {
     /**
      * @param {?} position
@@ -243,10 +355,19 @@ class PositionChangeData {
         this.roles = roles;
     }
 }
+if (false) {
+    /** @type {?} */
+    PositionChangeData.prototype.x;
+    /** @type {?} */
+    PositionChangeData.prototype.y;
+    /** @type {?} */
+    PositionChangeData.prototype.roles;
+}
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/components/draggable-point/ngx-draggable-point.component.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class NgxDraggablePointComponent {
     /**
@@ -268,11 +389,19 @@ class NgxDraggablePointComponent {
      * @return {?}
      */
     ngAfterViewInit() {
-        Object.keys(this.pointOptions).forEach(key => {
+        Object.keys(this.pointOptions).forEach((/**
+         * @param {?} key
+         * @return {?}
+         */
+        key => {
             this[key] = this.pointOptions[key];
-        });
+        }));
         // subscribe to pane dimensions changes
-        this.limitsService.paneDimensions.subscribe(dimensions => {
+        this.limitsService.paneDimensions.subscribe((/**
+         * @param {?} dimensions
+         * @return {?}
+         */
+        dimensions => {
             if (dimensions.width > 0 && dimensions.width > 0) {
                 this._paneDimensions = {
                     width: dimensions.width,
@@ -281,13 +410,17 @@ class NgxDraggablePointComponent {
                 this.position = this.getInitialPosition(dimensions);
                 this.limitsService.positionChange(new PositionChangeData(this.position, this.limitRoles));
             }
-        });
+        }));
         // subscribe to external reposition events
-        this.limitsService.repositionEvent.subscribe(positions => {
+        this.limitsService.repositionEvent.subscribe((/**
+         * @param {?} positions
+         * @return {?}
+         */
+        positions => {
             if (positions.length > 0) {
                 this.externalReposition(positions);
             }
-        });
+        }));
     }
     /**
      * returns a css style object for the point
@@ -333,9 +466,13 @@ class NgxDraggablePointComponent {
             x: 0,
             y: 0
         };
-        Object.keys(this.startPosition).forEach(axis => {
+        Object.keys(this.startPosition).forEach((/**
+         * @param {?} axis
+         * @return {?}
+         */
+        axis => {
             newPosition[axis] = limitException.resetCoordinates[axis] + limitException.resetCoefficients[axis];
-        });
+        }));
         this.position = newPosition;
         this.limitsService.positionChange(new PositionChangeData(this.position, this.limitRoles));
     }
@@ -377,7 +514,11 @@ class NgxDraggablePointComponent {
      * @return {?}
      */
     externalReposition(positions) {
-        positions.forEach(position => {
+        positions.forEach((/**
+         * @param {?} position
+         * @return {?}
+         */
+        position => {
             if (this.limitsService.compareArray(this.limitRoles, position.roles)) {
                 position = this.enforcePaneLimits(position);
                 this.position = {
@@ -385,7 +526,7 @@ class NgxDraggablePointComponent {
                     y: position.y
                 };
             }
-        });
+        }));
     }
     /**
      * returns a new point position if the movement exceeded the pane limit
@@ -417,7 +558,7 @@ class NgxDraggablePointComponent {
 NgxDraggablePointComponent.decorators = [
     { type: Component, args: [{
                 selector: 'ngx-draggable-point',
-                template: "<div #point ngDraggable=\"draggable\"\r\n     (movingOffset)=\"positionChange($event)\"\r\n     [ngStyle]=\"pointStyle()\"\r\n     [position]=\"position\"\r\n     [bounds]=\"container\"\r\n     [inBounds]=\"true\"\r\n     (endOffset)=\"movementEnd($event)\"\r\n      style=\"z-index: 1000\">\r\n</div>\r\n"
+                template: "<div #point ngDraggable=\"draggable\"\n     (movingOffset)=\"positionChange($event)\"\n     [ngStyle]=\"pointStyle()\"\n     [position]=\"position\"\n     [bounds]=\"container\"\n     [inBounds]=\"true\"\n     (endOffset)=\"movementEnd($event)\"\n      style=\"z-index: 1000\">\n</div>\n"
             }] }
 ];
 /** @nocollapse */
@@ -435,10 +576,48 @@ NgxDraggablePointComponent.propDecorators = {
     container: [{ type: Input }],
     _currentPosition: [{ type: Input }]
 };
+if (false) {
+    /** @type {?} */
+    NgxDraggablePointComponent.prototype.width;
+    /** @type {?} */
+    NgxDraggablePointComponent.prototype.height;
+    /** @type {?} */
+    NgxDraggablePointComponent.prototype.color;
+    /** @type {?} */
+    NgxDraggablePointComponent.prototype.shape;
+    /** @type {?} */
+    NgxDraggablePointComponent.prototype.pointOptions;
+    /** @type {?} */
+    NgxDraggablePointComponent.prototype.limitRoles;
+    /** @type {?} */
+    NgxDraggablePointComponent.prototype.startPosition;
+    /** @type {?} */
+    NgxDraggablePointComponent.prototype.container;
+    /**
+     * @type {?}
+     * @private
+     */
+    NgxDraggablePointComponent.prototype._currentPosition;
+    /** @type {?} */
+    NgxDraggablePointComponent.prototype.position;
+    /**
+     * @type {?}
+     * @private
+     */
+    NgxDraggablePointComponent.prototype._paneDimensions;
+    /** @type {?} */
+    NgxDraggablePointComponent.prototype.resetPosition;
+    /**
+     * @type {?}
+     * @private
+     */
+    NgxDraggablePointComponent.prototype.limitsService;
+}
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/components/filter-menu/ngx-filter-menu.component.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class NgxFilterMenuComponent {
     /**
@@ -452,41 +631,61 @@ class NgxFilterMenuComponent {
             {
                 name: 'default',
                 icon: 'filter_b_and_w',
-                action: (filter) => {
+                action: (/**
+                 * @param {?} filter
+                 * @return {?}
+                 */
+                (filter) => {
                     this.filterSelected.emit(filter);
-                },
+                }),
                 text: 'B&W'
             },
             {
                 name: 'bw2',
                 icon: 'filter_b_and_w',
-                action: (filter) => {
+                action: (/**
+                 * @param {?} filter
+                 * @return {?}
+                 */
+                (filter) => {
                     this.filterSelected.emit(filter);
-                },
+                }),
                 text: 'B&W 2'
             },
             {
                 name: 'bw3',
                 icon: 'blur_on',
-                action: (filter) => {
+                action: (/**
+                 * @param {?} filter
+                 * @return {?}
+                 */
+                (filter) => {
                     this.filterSelected.emit(filter);
-                },
+                }),
                 text: 'B&W 3'
             },
             {
                 name: 'magic_color',
                 icon: 'filter_vintage',
-                action: (filter) => {
+                action: (/**
+                 * @param {?} filter
+                 * @return {?}
+                 */
+                (filter) => {
                     this.filterSelected.emit(filter);
-                },
+                }),
                 text: 'Magic Color'
             },
             {
                 name: 'original',
                 icon: 'crop_original',
-                action: (filter) => {
+                action: (/**
+                 * @param {?} filter
+                 * @return {?}
+                 */
+                (filter) => {
                     this.filterSelected.emit(filter);
-                },
+                }),
                 text: 'Original'
             },
         ];
@@ -504,7 +703,7 @@ class NgxFilterMenuComponent {
 NgxFilterMenuComponent.decorators = [
     { type: Component, args: [{
                 selector: 'ngx-filter-menu',
-                template: "<mat-action-list>\r\n  <button mat-list-item *ngFor=\"let option of filterOptions\" (click)=\"selectOption(option.name)\">\r\n    <mat-icon>{{option.icon}}</mat-icon>\r\n    <span fxFlex=\"100\" style=\"text-align: start; margin: 5px\">{{option.text}}</span>\r\n    <span fxFlex=\"100\"></span>\r\n    <mat-icon *ngIf=\"option.name === data.filter\">done</mat-icon>\r\n  </button>\r\n</mat-action-list>\r\n"
+                template: "<mat-action-list>\n  <button mat-list-item *ngFor=\"let option of filterOptions\" (click)=\"selectOption(option.name)\">\n    <mat-icon>{{option.icon}}</mat-icon>\n    <span fxFlex=\"100\" style=\"text-align: start; margin: 5px\">{{option.text}}</span>\n    <span fxFlex=\"100\"></span>\n    <mat-icon *ngIf=\"option.name === data.filter\">done</mat-icon>\n  </button>\n</mat-action-list>\n"
             }] }
 ];
 /** @nocollapse */
@@ -515,10 +714,24 @@ NgxFilterMenuComponent.ctorParameters = () => [
 NgxFilterMenuComponent.propDecorators = {
     filterSelected: [{ type: Output }]
 };
+if (false) {
+    /** @type {?} */
+    NgxFilterMenuComponent.prototype.filterOptions;
+    /** @type {?} */
+    NgxFilterMenuComponent.prototype.filterSelected;
+    /**
+     * @type {?}
+     * @private
+     */
+    NgxFilterMenuComponent.prototype.bottomSheetRef;
+    /** @type {?} */
+    NgxFilterMenuComponent.prototype.data;
+}
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/components/shape-outline/ngx-shape-outline.component.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class NgxShapeOutlineComponent {
     /**
@@ -535,30 +748,45 @@ class NgxShapeOutlineComponent {
         // init drawing canvas dimensions
         this.canvas.nativeElement.width = this.dimensions.width;
         this.canvas.nativeElement.height = this.dimensions.height;
-        this.limitsService.positions.subscribe(positions => {
+        this.limitsService.positions.subscribe((/**
+         * @param {?} positions
+         * @return {?}
+         */
+        positions => {
             if (positions.length === 4) {
                 this._points = positions;
                 this.sortPoints();
                 this.clearCanvas();
                 this.drawShape();
             }
-        });
+        }));
         // subscribe to changes in the pane's dimensions
-        this.limitsService.paneDimensions.subscribe(dimensions => {
+        this.limitsService.paneDimensions.subscribe((/**
+         * @param {?} dimensions
+         * @return {?}
+         */
+        dimensions => {
             this.clearCanvas();
             this.canvas.nativeElement.width = dimensions.width;
             this.canvas.nativeElement.height = dimensions.height;
-        });
+        }));
         // subscribe to reposition events
-        this.limitsService.repositionEvent.subscribe(positions => {
+        this.limitsService.repositionEvent.subscribe((/**
+         * @param {?} positions
+         * @return {?}
+         */
+        positions => {
             if (positions.length === 4) {
-                setTimeout(() => {
+                setTimeout((/**
+                 * @return {?}
+                 */
+                () => {
                     this.clearCanvas();
                     this.sortPoints();
                     this.drawShape();
-                }, 10);
+                }), 10);
             }
-        });
+        }));
     }
     /**
      * clears the shape canvas
@@ -590,9 +818,13 @@ class NgxShapeOutlineComponent {
         for (let i = 0; i < 4; i++) {
             /** @type {?} */
             const roles = Array.from([sortOrder.vertical[i], sortOrder.horizontal[i]]);
-            sortedPoints.push(_points.filter((point) => {
+            sortedPoints.push(_points.filter((/**
+             * @param {?} point
+             * @return {?}
+             */
+            (point) => {
                 return this.limitsService.compareArray(point.roles, roles);
-            })[0]);
+            }))[0]);
         }
         this._sortedPoints = sortedPoints;
     }
@@ -609,7 +841,12 @@ class NgxShapeOutlineComponent {
         ctx.lineWidth = this.weight;
         ctx.strokeStyle = this.color;
         ctx.beginPath();
-        this._sortedPoints.forEach((point, index) => {
+        this._sortedPoints.forEach((/**
+         * @param {?} point
+         * @param {?} index
+         * @return {?}
+         */
+        (point, index) => {
             if (index === 0) {
                 ctx.moveTo(point.x, point.y);
             }
@@ -621,14 +858,14 @@ class NgxShapeOutlineComponent {
             else {
                 ctx.closePath();
             }
-        });
+        }));
         ctx.stroke();
     }
 }
 NgxShapeOutlineComponent.decorators = [
     { type: Component, args: [{
                 selector: 'ngx-shape-outine',
-                template: "<canvas #outline\r\n        style=\"position: absolute; z-index: 1000\"\r\n        [ngStyle]=\"{width: dimensions.width + 'px', height: dimensions.height + 'px'}\"\r\n        *ngIf=\"dimensions\">\r\n</canvas>\r\n"
+                template: "<canvas #outline\n        style=\"position: absolute; z-index: 1000\"\n        [ngStyle]=\"{width: dimensions.width + 'px', height: dimensions.height + 'px'}\"\n        *ngIf=\"dimensions\">\n</canvas>\n"
             }] }
 ];
 /** @nocollapse */
@@ -641,10 +878,36 @@ NgxShapeOutlineComponent.propDecorators = {
     dimensions: [{ type: Input }],
     canvas: [{ type: ViewChild, args: ['outline',] }]
 };
+if (false) {
+    /** @type {?} */
+    NgxShapeOutlineComponent.prototype.color;
+    /** @type {?} */
+    NgxShapeOutlineComponent.prototype.weight;
+    /** @type {?} */
+    NgxShapeOutlineComponent.prototype.dimensions;
+    /** @type {?} */
+    NgxShapeOutlineComponent.prototype.canvas;
+    /**
+     * @type {?}
+     * @private
+     */
+    NgxShapeOutlineComponent.prototype._points;
+    /**
+     * @type {?}
+     * @private
+     */
+    NgxShapeOutlineComponent.prototype._sortedPoints;
+    /**
+     * @type {?}
+     * @private
+     */
+    NgxShapeOutlineComponent.prototype.limitsService;
+}
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/components/image-editor/ngx-doc-scanner.component.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class NgxDocScannerComponent {
     /**
@@ -665,9 +928,12 @@ class NgxDocScannerComponent {
         this.editorButtons = [
             {
                 name: 'exit',
-                action: () => {
+                action: (/**
+                 * @return {?}
+                 */
+                () => {
                     this.exitEditor.emit('canceled');
-                },
+                }),
                 icon: 'arrow_back',
                 type: 'fab',
                 mode: 'crop'
@@ -681,30 +947,39 @@ class NgxDocScannerComponent {
             },
             {
                 name: 'done_crop',
-                action: () => __awaiter(this, void 0, void 0, function* () {
+                action: (/**
+                 * @return {?}
+                 */
+                () => __awaiter(this, void 0, void 0, function* () {
                     this.mode = 'color';
                     yield this.transform();
                     yield this.applyFilter(true);
-                }),
+                })),
                 icon: 'done',
                 type: 'fab',
                 mode: 'crop'
             },
             {
                 name: 'back',
-                action: () => {
+                action: (/**
+                 * @return {?}
+                 */
+                () => {
                     this.mode = 'crop';
                     this.loadFile(this.originalImage);
-                },
+                }),
                 icon: 'arrow_back',
                 type: 'fab',
                 mode: 'color'
             },
             {
                 name: 'filter',
-                action: () => {
+                action: (/**
+                 * @return {?}
+                 */
+                () => {
                     return this.chooseFilters();
-                },
+                }),
                 icon: 'photo_filter',
                 type: 'fab',
                 mode: 'color'
@@ -764,7 +1039,11 @@ class NgxDocScannerComponent {
             height: window.innerHeight
         };
         // subscribe to status of cv module
-        this.ngxOpenCv.cvState.subscribe((cvState) => {
+        this.ngxOpenCv.cvState.subscribe((/**
+         * @param {?} cvState
+         * @return {?}
+         */
+        (cvState) => {
             this.cvState = cvState.state;
             this.ready.emit(cvState.ready);
             if (cvState.error) {
@@ -776,20 +1055,28 @@ class NgxDocScannerComponent {
             else if (cvState.ready) {
                 this.processing.emit(false);
             }
-        });
+        }));
         // subscribe to positions of crop tool
-        this.limitsService.positions.subscribe(points => {
+        this.limitsService.positions.subscribe((/**
+         * @param {?} points
+         * @return {?}
+         */
+        points => {
             this.points = points;
-        });
+        }));
     }
     /**
      * returns an array of buttons according to the editor mode
      * @return {?}
      */
     get displayedButtons() {
-        return this.editorButtons.filter(button => {
+        return this.editorButtons.filter((/**
+         * @param {?} button
+         * @return {?}
+         */
+        button => {
             return button.mode === this.mode;
-        });
+        }));
     }
     // ****** //
     // INPUTS //
@@ -801,18 +1088,25 @@ class NgxDocScannerComponent {
      */
     set file(file) {
         if (file) {
-            setTimeout(() => {
+            setTimeout((/**
+             * @return {?}
+             */
+            () => {
                 this.processing.emit(true);
-            }, 5);
+            }), 5);
             this.imageLoaded = false;
             this.originalImage = file;
-            this.ngxOpenCv.cvState.subscribe((cvState) => __awaiter(this, void 0, void 0, function* () {
+            this.ngxOpenCv.cvState.subscribe((/**
+             * @param {?} cvState
+             * @return {?}
+             */
+            (cvState) => __awaiter(this, void 0, void 0, function* () {
                 if (cvState.ready) {
                     // read file to image & canvas
                     yield this.loadFile(file);
                     this.processing.emit(false);
                 }
-            }));
+            })));
         }
     }
     /**
@@ -822,11 +1116,15 @@ class NgxDocScannerComponent {
         // set options from config object
         this.options = new ImageEditorConfig(this.config);
         // set export image icon
-        this.editorButtons.forEach(button => {
+        this.editorButtons.forEach((/**
+         * @param {?} button
+         * @return {?}
+         */
+        button => {
             if (button.name === 'upload') {
                 button.icon = this.options.exportImageIcon;
             }
-        });
+        }));
         this.maxPreviewWidth = this.options.maxPreviewWidth;
         this.editorStyle = this.options.editorStyle;
     }
@@ -850,18 +1148,30 @@ class NgxDocScannerComponent {
             yield this.applyFilter(false);
             if (this.options.maxImageDimensions) {
                 this.resize(this.editedImage)
-                    .then(resizeResult => {
-                    resizeResult.toBlob((blob) => {
+                    .then((/**
+                 * @param {?} resizeResult
+                 * @return {?}
+                 */
+                resizeResult => {
+                    resizeResult.toBlob((/**
+                     * @param {?} blob
+                     * @return {?}
+                     */
+                    (blob) => {
                         this.editResult.emit(blob);
                         this.processing.emit(false);
-                    }, this.originalImage.type);
-                });
+                    }), this.originalImage.type);
+                }));
             }
             else {
-                this.editedImage.toBlob((blob) => {
+                this.editedImage.toBlob((/**
+                 * @param {?} blob
+                 * @return {?}
+                 */
+                (blob) => {
                     this.editResult.emit(blob);
                     this.processing.emit(false);
-                }, this.originalImage.type);
+                }), this.originalImage.type);
             }
         });
     }
@@ -877,10 +1187,13 @@ class NgxDocScannerComponent {
         const bottomSheetRef = this.bottomSheet.open(NgxFilterMenuComponent, {
             data: data
         });
-        bottomSheetRef.afterDismissed().subscribe(() => {
+        bottomSheetRef.afterDismissed().subscribe((/**
+         * @return {?}
+         */
+        () => {
             this.selectedFilter = data.filter;
             this.applyFilter(true);
-        });
+        }));
     }
     // *************************** //
     // File Input & Output Methods //
@@ -892,7 +1205,12 @@ class NgxDocScannerComponent {
      * @return {?}
      */
     loadFile(file) {
-        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+        return new Promise((/**
+         * @param {?} resolve
+         * @param {?} reject
+         * @return {?}
+         */
+        (resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             this.processing.emit(true);
             try {
                 yield this.readImage(file);
@@ -912,12 +1230,15 @@ class NgxDocScannerComponent {
             // show points
             this.imageLoaded = true;
             yield this.limitsService.setPaneDimensions({ width: this.previewDimensions.width, height: this.previewDimensions.height });
-            setTimeout(() => __awaiter(this, void 0, void 0, function* () {
+            setTimeout((/**
+             * @return {?}
+             */
+            () => __awaiter(this, void 0, void 0, function* () {
                 yield this.detectContours();
                 this.processing.emit(false);
                 resolve();
-            }), 15);
-        }));
+            })), 15);
+        })));
     }
     /**
      * read image from File object
@@ -926,7 +1247,12 @@ class NgxDocScannerComponent {
      * @return {?}
      */
     readImage(file) {
-        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+        return new Promise((/**
+         * @param {?} resolve
+         * @param {?} reject
+         * @return {?}
+         */
+        (resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             /** @type {?} */
             let imageSrc;
             try {
@@ -937,7 +1263,10 @@ class NgxDocScannerComponent {
             }
             /** @type {?} */
             const img = new Image();
-            img.onload = () => __awaiter(this, void 0, void 0, function* () {
+            img.onload = (/**
+             * @return {?}
+             */
+            () => __awaiter(this, void 0, void 0, function* () {
                 // set edited image canvas and dimensions
                 this.editedImage = (/** @type {?} */ (document.createElement('canvas')));
                 this.editedImage.width = img.width;
@@ -955,25 +1284,38 @@ class NgxDocScannerComponent {
                 this.imageDimensions.height = this.editedImage.height;
                 this.setPreviewPaneDimensions(this.editedImage);
                 resolve();
-            });
+            }));
             img.src = imageSrc;
-        }));
+        })));
         /**
          * read file from input field
          * @return {?}
          */
         function readFile() {
-            return new Promise((resolve, reject) => {
+            return new Promise((/**
+             * @param {?} resolve
+             * @param {?} reject
+             * @return {?}
+             */
+            (resolve, reject) => {
                 /** @type {?} */
                 const reader = new FileReader();
-                reader.onload = (event) => {
+                reader.onload = (/**
+                 * @param {?} event
+                 * @return {?}
+                 */
+                (event) => {
                     resolve(reader.result);
-                };
-                reader.onerror = (err) => {
+                });
+                reader.onerror = (/**
+                 * @param {?} err
+                 * @return {?}
+                 */
+                (err) => {
                     reject(err);
-                };
+                });
                 reader.readAsDataURL(file);
-            });
+            }));
         }
     }
     // ************************ //
@@ -985,9 +1327,17 @@ class NgxDocScannerComponent {
      * @return {?}
      */
     rotateImage() {
-        return new Promise((resolve, reject) => {
+        return new Promise((/**
+         * @param {?} resolve
+         * @param {?} reject
+         * @return {?}
+         */
+        (resolve, reject) => {
             this.processing.emit(true);
-            setTimeout(() => {
+            setTimeout((/**
+             * @return {?}
+             */
+            () => {
                 /** @type {?} */
                 const dst = cv.imread(this.editedImage);
                 // const dst = new cv.Mat();
@@ -1013,12 +1363,15 @@ class NgxDocScannerComponent {
                 };
                 // set new preview pane dimensions
                 this.limitsService.rotateClockwise(previewResizeRatios, initialPreviewDimensions, initialPositions);
-                this.showPreview().then(() => {
+                this.showPreview().then((/**
+                 * @return {?}
+                 */
+                () => {
                     this.processing.emit(false);
                     resolve();
-                });
-            }, 30);
-        });
+                }));
+            }), 30);
+        }));
     }
     /**
      * detects the contours of the document and
@@ -1027,9 +1380,17 @@ class NgxDocScannerComponent {
      * @return {?}
      */
     detectContours() {
-        return new Promise((resolve, reject) => {
+        return new Promise((/**
+         * @param {?} resolve
+         * @param {?} reject
+         * @return {?}
+         */
+        (resolve, reject) => {
             this.processing.emit(true);
-            setTimeout(() => {
+            setTimeout((/**
+             * @return {?}
+             */
+            () => {
                 // load the image and compute the ratio of the old height to the new height, clone it, and resize it
                 /** @type {?} */
                 const processingResizeRatio = 0.5;
@@ -1056,9 +1417,13 @@ class NgxDocScannerComponent {
                 hierarchy.delete();
                 contours.delete();
                 // transform the rectangle into a set of points
-                Object.keys(rect).forEach(key => {
+                Object.keys(rect).forEach((/**
+                 * @param {?} key
+                 * @return {?}
+                 */
+                key => {
                     rect[key] = rect[key] * this.imageResizeRatio;
-                });
+                }));
                 /** @type {?} */
                 const contourCoordinates = [
                     new PositionChangeData({ x: rect.x, y: rect.y }, ['left', 'top']),
@@ -1069,8 +1434,8 @@ class NgxDocScannerComponent {
                 this.limitsService.repositionPoints(contourCoordinates);
                 // this.processing.emit(false);
                 resolve();
-            }, 30);
-        });
+            }), 30);
+        }));
     }
     /**
      * apply perspective transform
@@ -1078,9 +1443,17 @@ class NgxDocScannerComponent {
      * @return {?}
      */
     transform() {
-        return new Promise((resolve, reject) => {
+        return new Promise((/**
+         * @param {?} resolve
+         * @param {?} reject
+         * @return {?}
+         */
+        (resolve, reject) => {
             this.processing.emit(true);
-            setTimeout(() => {
+            setTimeout((/**
+             * @return {?}
+             */
+            () => {
                 /** @type {?} */
                 const dst = cv.imread(this.editedImage);
                 // create source coordinates matrix
@@ -1090,9 +1463,13 @@ class NgxDocScannerComponent {
                     this.getPoint(['top', 'right']),
                     this.getPoint(['bottom', 'right']),
                     this.getPoint(['bottom', 'left'])
-                ].map(point => {
+                ].map((/**
+                 * @param {?} point
+                 * @return {?}
+                 */
+                point => {
                     return [point.x / this.imageResizeRatio, point.y / this.imageResizeRatio];
-                });
+                }));
                 // get max width
                 /** @type {?} */
                 const bottomWidth = this.getPoint(['bottom', 'right']).x - this.getPoint(['bottom', 'left']).x;
@@ -1133,12 +1510,15 @@ class NgxDocScannerComponent {
                 Md.delete();
                 transformMatrix.delete();
                 this.setPreviewPaneDimensions(this.editedImage);
-                this.showPreview().then(() => {
+                this.showPreview().then((/**
+                 * @return {?}
+                 */
+                () => {
                     this.processing.emit(false);
                     resolve();
-                });
-            }, 30);
-        });
+                }));
+            }), 30);
+        }));
     }
     /**
      * applies the selected filter to the image
@@ -1148,7 +1528,12 @@ class NgxDocScannerComponent {
      * @return {?}
      */
     applyFilter(preview) {
-        return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+        return new Promise((/**
+         * @param {?} resolve
+         * @param {?} reject
+         * @return {?}
+         */
+        (resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             this.processing.emit(true);
             // default options
             /** @type {?} */
@@ -1182,7 +1567,10 @@ class NgxDocScannerComponent {
                     options.thMeanCorrection = 15;
                     break;
             }
-            setTimeout(() => __awaiter(this, void 0, void 0, function* () {
+            setTimeout((/**
+             * @return {?}
+             */
+            () => __awaiter(this, void 0, void 0, function* () {
                 if (options.grayScale) {
                     cv.cvtColor(dst, dst, cv.COLOR_RGBA2GRAY, 0);
                 }
@@ -1206,8 +1594,8 @@ class NgxDocScannerComponent {
                 yield this.showPreview(dst);
                 this.processing.emit(false);
                 resolve();
-            }), 30);
-        }));
+            })), 30);
+        })));
     }
     /**
      * resize an image to fit constraints set in options.maxImageDimensions
@@ -1216,9 +1604,17 @@ class NgxDocScannerComponent {
      * @return {?}
      */
     resize(image) {
-        return new Promise((resolve, reject) => {
+        return new Promise((/**
+         * @param {?} resolve
+         * @param {?} reject
+         * @return {?}
+         */
+        (resolve, reject) => {
             this.processing.emit(true);
-            setTimeout(() => {
+            setTimeout((/**
+             * @return {?}
+             */
+            () => {
                 /** @type {?} */
                 const src = cv.imread(image);
                 /** @type {?} */
@@ -1252,8 +1648,8 @@ class NgxDocScannerComponent {
                     this.processing.emit(false);
                     resolve(image);
                 }
-            }, 30);
-        });
+            }), 30);
+        }));
     }
     /**
      * display a preview of the image on the preview canvas
@@ -1262,7 +1658,12 @@ class NgxDocScannerComponent {
      * @return {?}
      */
     showPreview(image) {
-        return new Promise((resolve, reject) => {
+        return new Promise((/**
+         * @param {?} resolve
+         * @param {?} reject
+         * @return {?}
+         */
+        (resolve, reject) => {
             /** @type {?} */
             let src;
             if (image) {
@@ -1280,7 +1681,7 @@ class NgxDocScannerComponent {
             src.delete();
             dst.delete();
             resolve();
-        });
+        }));
     }
     // *************** //
     // Utility Methods //
@@ -1339,15 +1740,19 @@ class NgxDocScannerComponent {
      * @return {?}
      */
     getPoint(roles) {
-        return this.points.find(point => {
+        return this.points.find((/**
+         * @param {?} point
+         * @return {?}
+         */
+        point => {
             return this.limitsService.compareArray(point.roles, roles);
-        });
+        }));
     }
 }
 NgxDocScannerComponent.decorators = [
     { type: Component, args: [{
                 selector: 'ngx-doc-scanner',
-                template: "<div [ngStyle]=\"editorStyle\" fxLayoutAlign=\"space-around\" style=\"direction: ltr !important\">\r\n  <div #imageContainer [ngStyle]=\"imageDivStyle\" style=\"margin: auto;\" >\r\n    <ng-container *ngIf=\"imageLoaded && mode === 'crop'\">\r\n      <ngx-shape-outine #shapeOutline [color]=\"options.cropToolColor\" [weight]=\"options.cropToolLineWeight\" [dimensions]=\"previewDimensions\"></ngx-shape-outine>\r\n      <ngx-draggable-point #topLeft [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: 0, y: 0}\" [limitRoles]=\"['top', 'left']\" [container]=\"imageContainer\"></ngx-draggable-point>\r\n      <ngx-draggable-point #topRight [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: previewDimensions.width, y: 0}\" [limitRoles]=\"['top', 'right']\" [container]=\"imageContainer\"></ngx-draggable-point>\r\n      <ngx-draggable-point #bottomLeft [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: 0, y: previewDimensions.height}\" [limitRoles]=\"['bottom', 'left']\" [container]=\"imageContainer\"></ngx-draggable-point>\r\n      <ngx-draggable-point #bottomRight [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: previewDimensions.width, y: previewDimensions.height}\" [limitRoles]=\"['bottom', 'right']\" [container]=\"imageContainer\"></ngx-draggable-point>\r\n    </ng-container>\r\n    <canvas #PreviewCanvas [ngStyle]=\"{'max-width': options.maxPreviewWidth}\" style=\"z-index: 5\" ></canvas>\r\n  </div>\r\n  <div class=\"editor-actions\" fxLayout=\"row\" fxLayoutAlign=\"space-around\" style=\"position: absolute; bottom: 0; width: 100vw\">\r\n    <ng-container *ngFor=\"let button of displayedButtons\" [ngSwitch]=\"button.type\">\r\n      <button mat-mini-fab *ngSwitchCase=\"'fab'\" [name]=\"button.name\" (click)=\"button.action()\" [color]=\"options.buttonThemeColor\">\r\n        <mat-icon>{{button.icon}}</mat-icon>\r\n      </button>\r\n      <button mat-raised-button *ngSwitchCase=\"'button'\" [name]=\"button.name\" (click)=\"button.action()\" [color]=\"options.buttonThemeColor\">\r\n        <mat-icon>{{button.icon}}</mat-icon>\r\n        <span>{{button.text}}}</span>\r\n      </button>\r\n    </ng-container>\r\n  </div>\r\n</div>\r\n\r\n\r\n",
+                template: "<div [ngStyle]=\"editorStyle\" fxLayoutAlign=\"space-around\" style=\"direction: ltr !important\">\n  <div #imageContainer [ngStyle]=\"imageDivStyle\" style=\"margin: auto;\" >\n    <ng-container *ngIf=\"imageLoaded && mode === 'crop'\">\n      <ngx-shape-outine #shapeOutline [color]=\"options.cropToolColor\" [weight]=\"options.cropToolLineWeight\" [dimensions]=\"previewDimensions\"></ngx-shape-outine>\n      <ngx-draggable-point #topLeft [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: 0, y: 0}\" [limitRoles]=\"['top', 'left']\" [container]=\"imageContainer\"></ngx-draggable-point>\n      <ngx-draggable-point #topRight [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: previewDimensions.width, y: 0}\" [limitRoles]=\"['top', 'right']\" [container]=\"imageContainer\"></ngx-draggable-point>\n      <ngx-draggable-point #bottomLeft [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: 0, y: previewDimensions.height}\" [limitRoles]=\"['bottom', 'left']\" [container]=\"imageContainer\"></ngx-draggable-point>\n      <ngx-draggable-point #bottomRight [pointOptions]=\"options.pointOptions\" [startPosition]=\"{x: previewDimensions.width, y: previewDimensions.height}\" [limitRoles]=\"['bottom', 'right']\" [container]=\"imageContainer\"></ngx-draggable-point>\n    </ng-container>\n    <canvas #PreviewCanvas [ngStyle]=\"{'max-width': options.maxPreviewWidth}\" style=\"z-index: 5\" ></canvas>\n  </div>\n  <div class=\"editor-actions\" fxLayout=\"row\" fxLayoutAlign=\"space-around\" style=\"position: absolute; bottom: 0; width: 100vw\">\n    <ng-container *ngFor=\"let button of displayedButtons\" [ngSwitch]=\"button.type\">\n      <button mat-mini-fab *ngSwitchCase=\"'fab'\" [name]=\"button.name\" (click)=\"button.action()\" [color]=\"options.buttonThemeColor\">\n        <mat-icon>{{button.icon}}</mat-icon>\n      </button>\n      <button mat-raised-button *ngSwitchCase=\"'button'\" [name]=\"button.name\" (click)=\"button.action()\" [color]=\"options.buttonThemeColor\">\n        <mat-icon>{{button.icon}}</mat-icon>\n        <span>{{button.text}}}</span>\n      </button>\n    </ng-container>\n  </div>\n</div>\n\n\n",
                 styles: [".editor-actions{padding:12px}.editor-actions button{margin:5px}"]
             }] }
 ];
@@ -1367,6 +1772,149 @@ NgxDocScannerComponent.propDecorators = {
     file: [{ type: Input }],
     config: [{ type: Input }]
 };
+if (false) {
+    /**
+     * editor config object
+     * @type {?}
+     */
+    NgxDocScannerComponent.prototype.options;
+    /**
+     * an array of action buttons displayed on the editor screen
+     * @type {?}
+     * @private
+     */
+    NgxDocScannerComponent.prototype.editorButtons;
+    /**
+     * max width of the preview area
+     * @type {?}
+     * @private
+     */
+    NgxDocScannerComponent.prototype.maxPreviewWidth;
+    /**
+     * dimensions of the image container
+     * @type {?}
+     */
+    NgxDocScannerComponent.prototype.imageDivStyle;
+    /**
+     * editor div style
+     * @type {?}
+     */
+    NgxDocScannerComponent.prototype.editorStyle;
+    /**
+     * state of opencv loading
+     * @type {?}
+     * @private
+     */
+    NgxDocScannerComponent.prototype.cvState;
+    /**
+     * true after the image is loaded and preview is displayed
+     * @type {?}
+     */
+    NgxDocScannerComponent.prototype.imageLoaded;
+    /**
+     * editor mode
+     * @type {?}
+     */
+    NgxDocScannerComponent.prototype.mode;
+    /**
+     * filter selected by the user, returned by the filter selector bottom sheet
+     * @type {?}
+     * @private
+     */
+    NgxDocScannerComponent.prototype.selectedFilter;
+    /**
+     * viewport dimensions
+     * @type {?}
+     * @private
+     */
+    NgxDocScannerComponent.prototype.screenDimensions;
+    /**
+     * image dimensions
+     * @type {?}
+     * @private
+     */
+    NgxDocScannerComponent.prototype.imageDimensions;
+    /**
+     * dimensions of the preview pane
+     * @type {?}
+     */
+    NgxDocScannerComponent.prototype.previewDimensions;
+    /**
+     * ration between preview image and original
+     * @type {?}
+     * @private
+     */
+    NgxDocScannerComponent.prototype.imageResizeRatio;
+    /**
+     * stores the original image for reset purposes
+     * @type {?}
+     * @private
+     */
+    NgxDocScannerComponent.prototype.originalImage;
+    /**
+     * stores the edited image
+     * @type {?}
+     * @private
+     */
+    NgxDocScannerComponent.prototype.editedImage;
+    /**
+     * stores the preview image as canvas
+     * @type {?}
+     * @private
+     */
+    NgxDocScannerComponent.prototype.previewCanvas;
+    /**
+     * an array of points used by the crop tool
+     * @type {?}
+     * @private
+     */
+    NgxDocScannerComponent.prototype.points;
+    /**
+     * optional binding to the exit button of the editor
+     * @type {?}
+     */
+    NgxDocScannerComponent.prototype.exitEditor;
+    /**
+     * fires on edit completion
+     * @type {?}
+     */
+    NgxDocScannerComponent.prototype.editResult;
+    /**
+     * emits errors, can be linked to an error handler of choice
+     * @type {?}
+     */
+    NgxDocScannerComponent.prototype.error;
+    /**
+     * emits the loading status of the cv module.
+     * @type {?}
+     */
+    NgxDocScannerComponent.prototype.ready;
+    /**
+     * emits true when processing is done, false when completed
+     * @type {?}
+     */
+    NgxDocScannerComponent.prototype.processing;
+    /**
+     * editor configuration object
+     * @type {?}
+     */
+    NgxDocScannerComponent.prototype.config;
+    /**
+     * @type {?}
+     * @private
+     */
+    NgxDocScannerComponent.prototype.ngxOpenCv;
+    /**
+     * @type {?}
+     * @private
+     */
+    NgxDocScannerComponent.prototype.limitsService;
+    /**
+     * @type {?}
+     * @private
+     */
+    NgxDocScannerComponent.prototype.bottomSheet;
+}
 /**
  * a class for generating configuration objects for the editor
  */
@@ -1433,9 +1981,13 @@ class ImageEditorConfig {
          */
         this.maxPreviewWidth = 800;
         if (options) {
-            Object.keys(options).forEach(key => {
+            Object.keys(options).forEach((/**
+             * @param {?} key
+             * @return {?}
+             */
+            key => {
                 this[key] = options[key];
-            });
+            }));
         }
         this.editorStyle = { 'background-color': this.editorBackgroundColor };
         Object.assign(this.editorStyle, this.editorDimensions);
@@ -1449,10 +2001,78 @@ class ImageEditorConfig {
         Object.assign(this.pointOptions, this.cropToolDimensions);
     }
 }
+if (false) {
+    /**
+     * max dimensions of oputput image. if set to zero
+     * @type {?}
+     */
+    ImageEditorConfig.prototype.maxImageDimensions;
+    /**
+     * background color of the main editor div
+     * @type {?}
+     */
+    ImageEditorConfig.prototype.editorBackgroundColor;
+    /**
+     * css properties for the main editor div
+     * @type {?}
+     */
+    ImageEditorConfig.prototype.editorDimensions;
+    /**
+     * css that will be added to the main div of the editor component
+     * @type {?}
+     */
+    ImageEditorConfig.prototype.extraCss;
+    /**
+     * material design theme color name
+     * @type {?}
+     */
+    ImageEditorConfig.prototype.buttonThemeColor;
+    /**
+     * icon for the button that completes the editing and emits the edited image
+     * @type {?}
+     */
+    ImageEditorConfig.prototype.exportImageIcon;
+    /**
+     * color of the crop tool
+     * @type {?}
+     */
+    ImageEditorConfig.prototype.cropToolColor;
+    /**
+     * shape of the crop tool, can be either a rectangle or a circle
+     * @type {?}
+     */
+    ImageEditorConfig.prototype.cropToolShape;
+    /**
+     * dimensions of the crop tool
+     * @type {?}
+     */
+    ImageEditorConfig.prototype.cropToolDimensions;
+    /**
+     * aggregation of the properties regarding point attributes generated by the class constructor
+     * @type {?}
+     */
+    ImageEditorConfig.prototype.pointOptions;
+    /**
+     * aggregation of the properties regarding the editor style generated by the class constructor
+     * @type {?}
+     */
+    ImageEditorConfig.prototype.editorStyle;
+    /**
+     * crop tool outline width
+     * @type {?}
+     */
+    ImageEditorConfig.prototype.cropToolLineWeight;
+    /**
+     * maximum size of the preview pane
+     * @type {?}
+     */
+    ImageEditorConfig.prototype.maxPreviewWidth;
+}
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/ngx-document-scanner.module.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class NgxDocumentScannerModule {
     /**
@@ -1507,19 +2127,129 @@ NgxDocumentScannerModule.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: lib/PublicModels.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @record
+ */
+function OpenCVState() { }
+if (false) {
+    /** @type {?} */
+    OpenCVState.prototype.ready;
+    /** @type {?} */
+    OpenCVState.prototype.loading;
+    /** @type {?} */
+    OpenCVState.prototype.error;
+    /** @type {?} */
+    OpenCVState.prototype.state;
+}
+/**
+ * describes an object with width and height properties
+ * @record
+ */
+function ImageDimensions() { }
+if (false) {
+    /** @type {?} */
+    ImageDimensions.prototype.width;
+    /** @type {?} */
+    ImageDimensions.prototype.height;
+}
+/**
+ * describes a configuration object for the editor
+ * @record
+ */
+function DocScannerConfig() { }
+if (false) {
+    /**
+     * max dimensions of output image. if set to zero will not resize the image
+     * @type {?|undefined}
+     */
+    DocScannerConfig.prototype.maxImageDimensions;
+    /**
+     * background color of the main editor div
+     * @type {?|undefined}
+     */
+    DocScannerConfig.prototype.editorBackgroundColor;
+    /**
+     * css properties for the main editor div
+     * @type {?|undefined}
+     */
+    DocScannerConfig.prototype.editorDimensions;
+    /**
+     * css that will be added to the main div of the editor component
+     * @type {?|undefined}
+     */
+    DocScannerConfig.prototype.extraCss;
+    /**
+     * material design theme color name
+     * @type {?|undefined}
+     */
+    DocScannerConfig.prototype.buttonThemeColor;
+    /**
+     * icon for the button that completes the editing and emits the edited image
+     * @type {?|undefined}
+     */
+    DocScannerConfig.prototype.exportImageIcon;
+    /**
+     * color of the crop tool (points and connecting lines)
+     * @type {?|undefined}
+     */
+    DocScannerConfig.prototype.cropToolColor;
+    /**
+     * shape of the crop tool points
+     * @type {?|undefined}
+     */
+    DocScannerConfig.prototype.cropToolShape;
+    /**
+     * width and height of the crop tool points
+     * @type {?|undefined}
+     */
+    DocScannerConfig.prototype.cropToolDimensions;
+    /**
+     * weight of the crop tool's connecting lines
+     * @type {?|undefined}
+     */
+    DocScannerConfig.prototype.cropToolLineWeight;
+    /**
+     * max width of the preview pane
+     * @type {?|undefined}
+     */
+    DocScannerConfig.prototype.maxPreviewWidth;
+}
+/**
+ * describes a configuration object for the OpenCV service
+ * @record
+ */
+function OpenCVConfig() { }
+if (false) {
+    /**
+     * path to the directory containing the OpenCV files, in the form of '/path/to/<opencv directory>'
+     * directory must contain the the following files:
+     * --<OpenCvDir>
+     * ----opencv.js
+     * ----opencv_js.wasm
+     * @type {?|undefined}
+     */
+    OpenCVConfig.prototype.openCVDirPath;
+    /**
+     * additional callback that will run when OpenCv has finished loading and parsing
+     * @type {?|undefined}
+     */
+    OpenCVConfig.prototype.runOnOpenCVInit;
+}
+
+/**
+ * @fileoverview added by tsickle
+ * Generated from: public_api.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated from: ngx-document-scanner.ts
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { NgxDocumentScannerModule, NgxDocScannerComponent, NgxDraggablePointComponent as ɵa, NgxFilterMenuComponent as ɵc, NgxShapeOutlineComponent as ɵd, LimitsService as ɵb };
-
+export { NgxDocScannerComponent, NgxDocumentScannerModule, NgxDraggablePointComponent as ɵa, LimitsService as ɵb, NgxFilterMenuComponent as ɵc, NgxShapeOutlineComponent as ɵd };
 //# sourceMappingURL=ngx-document-scanner.js.map

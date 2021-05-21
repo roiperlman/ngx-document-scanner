@@ -2,9 +2,9 @@
   "name": "ngx-opencv",
   "version": "1.0.5",
   "peerDependencies": {
-    "@angular/common": "^7.0.0",
-    "@angular/core": "^7.0.0",
-    "ngx-opencv": "^1.0.4"
+    "@angular/common": "^9.1.9",
+    "@angular/core": "^9.1.9",
+    "ngx-opencv": "^2.0.1"
   },
   "keywords": [
     "opencv",
@@ -35,6 +35,6 @@
   "metadata": "ngx-opencv.metadata.json",
   "sideEffects": false,
   "dependencies": {
-    "tslib": "^1.9.0"
+    "tslib": "^1.10.0"
   }
 }

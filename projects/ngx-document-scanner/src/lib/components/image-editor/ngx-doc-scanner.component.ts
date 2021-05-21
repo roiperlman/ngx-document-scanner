@@ -1,6 +1,6 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {LimitsService, PointPositionChange, PositionChangeData, RolesArray} from '../../services/limits.service';
-import {MatBottomSheet} from '@angular/material';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
 import {NgxFilterMenuComponent} from '../filter-menu/ngx-filter-menu.component';
 import {PointShape} from '../../PrivateModels';
 // import {NgxOpenCVService} from '../../services/ngx-opencv.service';

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Inject, Output} from '@angular/core';
 import {EditorActionButton} from '../../PrivateModels';
-import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef} from '@angular/material';
+import {MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef} from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'ngx-filter-menu',
